@@ -2,12 +2,9 @@
 
 
 function pages2Str(pages){
-
-
-    /*
-    for(i=0;i<Object.keys(pages.saved_pages).length;i++){
-
-	console.log(i);
+    var outStr = "";
+    for (var key in pages){
+        outStr = outStr.concat(key + ',\t' + pages[key]["name"] + ',\t' + pages[key]["price"] + '\n');
     }
-    */
+    return outStr;
 }
