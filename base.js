@@ -46,7 +46,6 @@ function getTradeIn(response){
     var el = document.createElement( 'html' );
     el.innerHTML = response;
     var tradeVal = el.getElementsByClassName(DIV_TRADE_NAME);
-    
 }
 
 //importPages
@@ -56,33 +55,17 @@ function getTradeIn(response){
 
 function importPages(response){
 
-    //checking import text
-    response = response.trim("\n");
-    
-    //operating on input text
-    response = response.split("\n");
-    var savedPages = {};
-
-    for (i=0;i<response.length;i++){
-        itemStr = response[i];
-        itemStr = itemStr.split(",");
-        savedPages[itemStr[0].trim()] = {}
-        savedPages[itemStr[0].trim()]["name"] = itemStr[1].trim();
-        savedPages[itemStr[0].trim()]["price"] = parseFloat(itemStr[2]);
-    }
-    console.log(savedPages);
-    chrome.storage.local.set({'saved_pages': savedPages}, function() {
-        // Notify that we saved.
-        alert('Data Successfully Saved');
-    });
+  savedPages = string2Pages(response);
+  console.log(savedPages);
+  chrome.storage.local.set({'saved_pages': savedPages}, function() {
+      // Notify that we saved.
+      alert('Data Successfully Saved');
+  });
 }
 
 function exportPages(){
-    
-    var varName = 'saved_pages';
-    chrome.storage.local.get(varName,function(result){
-        document.getElementById("text_area").value = pages2Str(result.saved_pages);
-    });
-
-    
+  var varName = 'saved_pages';
+  chrome.storage.local.get(varName,function(result){
+      document.getElementById("text_area").value = pages2Str(result.saved_pages);
+  });
 }
