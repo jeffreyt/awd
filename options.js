@@ -7,7 +7,6 @@ window.onload = function(){
     document.getElementById("export_perform").addEventListener('click',function(){
         document.getElementById("text_area").value = "";
         exportPages();
-        //document.getElementById("export_perform").disabled = true;
     });
 
 }
