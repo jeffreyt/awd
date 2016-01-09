@@ -1,5 +1,3 @@
-var DEFAULT_CHECKTIME = 180.0;
-
 
 window.onload = function(){
 
@@ -17,7 +15,6 @@ window.onload = function(){
       document.getElementById("check_time_slider").value = result.interval_time;
     }
   });
-
 
   document.getElementById("import_perform").addEventListener('click',function(){
       var importText = document.getElementById("text_area").value

@@ -5,7 +5,7 @@ DIV_TRADE_NAME = ''
 PRICE_NAME = 'a-size-large a-color-price olpOfferPrice a-text-bold'
 CONDITION_NAME = 'a-size-medium olpCondition a-text-bold'
 DESCRIPTION_NAME = 'comments'
-
+DEFAULT_CHECKTIME = 180.0;
 
 //getOffers
 //description:

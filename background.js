@@ -4,7 +4,21 @@ url = ['http://www.amazon.com/gp/offer-listing/B00VMB5VFK/ref=sr_1_5_olp?s=merch
 
 
 //On Startup
+/*
+function setBGTime(){
+	chrome.storage.local.get("interval_time",function(result){
 
+
+
+
+		document.getElementById("bg_interval_time").value = result.interval_time;
+	});
+}
+
+setBGTime();
+console.log(document.getElementById("bg_interval_time").value);
+*/
+//get or set options
 //
 
 /*
