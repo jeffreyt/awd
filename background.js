@@ -1,6 +1,38 @@
 
-url=[];
-url = ['http://www.amazon.com/gp/offer-listing/B00VMB5VFK/ref=sr_1_5_olp?s=merchant&ie=UTF8&qid=1450712339&sr=1-5&condition=used','http://www.amazon.com/gp/offer-listing/B0118GJKIW/ref=sr_1_2_olp?m=A2L77EE7U53NWQ&s=warehouse-deals&ie=UTF8&qid=1450817997&sr=1-2&condition=used'];
+
+chrome.storage.local.get("interval_time",function(result){
+	//set alarm
+	createAlarm("time_alarm",result.interval_time);
+})
+
+chrome.alarms.onAlarm.addListener(function( alarm ) {
+	chrome.storage.local.get("saved_pages",function(result){
+		newResult = result.saved_pages;
+		//step through saved pages
+		for (var key in result.saved_pages){
+			var urlStr = amzId2Url(key);
+			//get html of page and pass to getOffers
+			$.get(urlStr, function(response) {
+				returnOffers = getOffers(response);
+				//if there are any offers, check against last price and max price
+				if (returnOffers[0]>0){
+				  console.log(parseFloat(returnOffers[1][0][0].replace('$','')));
+					newResult[key]["old_price"] = parseFloat(returnOffers[1][0][0].replace('$',''));
+					//if result.saved_pages
+
+
+
+
+				}
+				returnOffers = null;
+			});
+		}
+	});
+});
+
+
+
+
 
 
 //On Startup
