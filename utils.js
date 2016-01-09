@@ -26,7 +26,7 @@ function str2Pages(response){
       savedPages[itemStr[0].trim()] = {}
       savedPages[itemStr[0].trim()]["name"] = itemStr[1].trim();
       savedPages[itemStr[0].trim()]["price"] = parseFloat(itemStr[2]);
-      savedPages[itemStr[0].trim()]["chcksum"] = "";
+      savedPages[itemStr[0].trim()]["old_price"] = "";
   }
   return savedPages;
 }
