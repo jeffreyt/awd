@@ -7,6 +7,10 @@ CONDITION_NAME = 'a-size-medium olpCondition a-text-bold'
 DESCRIPTION_NAME = 'comments'
 DEFAULT_CHECKTIME = 180.0;
 
+
+
+
+
 //getOffers
 //description:
 //input: html (str)
@@ -24,12 +28,10 @@ function getOffers(response){
 	       var price = offers[j].getElementsByClassName(PRICE_NAME)[0].innerText.trim();
 	       var condition = offers[j].getElementsByClassName(CONDITION_NAME)[0].innerText.replace(/\r?\n|\r/g, '').trim().replace(/\s+/g, ' ');
 	       var description = offers[j].getElementsByClassName(DESCRIPTION_NAME)[0].innerText.replace(/\r?\n|\r/g, '').trim().replace(/\s+/g, ' ');
-            var chcksum = "";
 	       if (description.indexOf('\u00AB') > -1) {description = description.substring(0,description.indexOf('\u00AB'));}
 	       indArr.push(price);
 	       indArr.push(condition);
 	       indArr.push(description);
-            indArr.push(chcksum);
 
 	       allOffers.push(indArr);
         }
@@ -55,7 +57,7 @@ function getTradeIn(response){
 
 function importPages(response){
 
-  savedPages = string2Pages(response);
+  savedPages = str2Pages(response);
   console.log(savedPages);
   chrome.storage.local.set({'saved_pages': savedPages}, function() {
       // Notify that we saved.
@@ -68,4 +70,18 @@ function exportPages(){
   chrome.storage.local.get(varName,function(result){
       document.getElementById("text_area").value = pages2Str(result.saved_pages);
   });
+}
+
+
+
+//Alarms
+
+function createAlarm(alarmName,alarmInterval) {
+	chrome.alarms.create(alarmName, {
+		delayInMinutes: 0.0, periodInMinutes: alarmInterval
+	});
+}
+
+function cancelAlarm(alarmName){
+  chrome.alarms.clear(alarmName);
 }
