@@ -6,8 +6,10 @@
                     "http://www.amazon.com/",
                     "https://www.amazon.com/",
                     "chrome://favicon/",
+                    "storage",
                     "unlimitedStorage",
-                    "notifications" ],
+                    "notifications",
+                    "alarms" ],
     "version": "1.0",
 
     "browser_action":{
