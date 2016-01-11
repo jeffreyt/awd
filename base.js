@@ -8,8 +8,64 @@ DESCRIPTION_NAME = 'comments'
 DEFAULT_CHECKTIME = 180.0;
 
 
+function processPages(savedPages,resultPages){
+  var toNotify = [];
+  var count = Object.keys(savedPages).length;
+  for (i in savedPages){
+    (function(keys){
+      var urlStr = amzId2Url(i);
+      getData(urlStr,function(err,data){
+        //console.log(data);
+        count--;
+        //toNotify.push(processHTML(data,i,savedPages));
+        console.log(processHTML(data,i,savedPages));
+        if (count < 1){
+          //console.log(toNotify);
+        }
+      });
+    })(i);
+    //notice = processHTML(htmlStr);
+  }
+  function getData(url,callback){
+    $.get(url,function(result){
+      //console.log(result);
+      callback(null,result)
+    });
+  };
 
+}
 
+function processHTML(htmlStr,key,savedPages){
+  newSavedPages = savedPages;
+  returnOffers = getOffers(htmlStr);
+  var name = savedPages[key]['name'];
+  var maxPrice = savedPages[key]['max_price'];
+  var oldPrice = savedPages[key]['old_price'];
+  //console.log(oldPrice);
+  //if there are any offers, check against max price
+  if (returnOffers[0]>0){
+    //console.log(name);
+    //console.log(parseFloat(returnOffers[1][0][0].replace('$','')));
+    lowestPrice = parseFloat(returnOffers[1][0][0].replace('$',''));
+    if (lowestPrice <= maxPrice & lowestPrice < oldPrice){
+      //item meets price criteria.  alert user
+      console.log('alert for lowest price sucka');
+    }
+  }
+  else{
+    lowestPrice = MAX_PRICE;
+  }
+  //re-save oldPrice
+  newSavedPages[key]["old_price"] = lowestPrice;
+  notice = [savedPages[key],lowestPrice, returnOffers];
+  //console.log(newSavedPages[key])
+  //cleaning up
+  returnOffers = null;
+  urlStr = null;
+  //re-save newSavedPages
+  //console.log(notice);
+  return notice;
+}
 
 //getOffers
 //description:
@@ -50,6 +106,9 @@ function getTradeIn(response){
     var tradeVal = el.getElementsByClassName(DIV_TRADE_NAME);
 }
 
+
+//Options Functions
+
 //importPages
 //description:
 //input:
@@ -84,4 +143,12 @@ function createAlarm(alarmName,alarmInterval) {
 
 function cancelAlarm(alarmName){
   chrome.alarms.clear(alarmName);
+}
+
+//Notifications
+
+function fireNotification(){
+  var opt = {type: "basic",title: "Your Title",message: "Your message",iconUrl: "icon.png"}
+  chrome.notifications.create("notificationName",opt,function(){});
+
 }
