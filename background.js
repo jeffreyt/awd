@@ -1,5 +1,4 @@
 
-
 chrome.storage.local.get("interval_time",function(result){
 	//set alarm
 	createAlarm("time_alarm",result.interval_time);
@@ -7,33 +6,20 @@ chrome.storage.local.get("interval_time",function(result){
 
 chrome.alarms.onAlarm.addListener(function( alarm ) {
 	chrome.storage.local.get("saved_pages",function(result){
-		newResult = result.saved_pages;
-		//step through saved pages
-		for (var key in result.saved_pages){
-			var urlStr = amzId2Url(key);
-			//get html of page and pass to getOffers
-			$.get(urlStr, function(response) {
-				returnOffers = getOffers(response);
-				//if there are any offers, check against last price and max price
-				if (returnOffers[0]>0){
-				  console.log(parseFloat(returnOffers[1][0][0].replace('$','')));
-					newResult[key]["old_price"] = parseFloat(returnOffers[1][0][0].replace('$',''));
-					//if result.saved_pages
-
-
-
-
-				}
-				returnOffers = null;
-			});
-		}
+		//console.log(result.saved_pages['B01574SORE']['old_price']);
+		//console.log(processPages(result.saved_pages)['B01574SORE']['old_price']);
+		//myNewSavedPage['B01574SORE']['old_price']=277;
+		processPages(result.saved_pages,function(){
+			
+		});
+		//chrome.storage.local.set({'saved_pages': processPages(myNewSavedPage)}, function() {
+		//});
+		//using stored pages, pass to processPages where pages are parsed, alerts
+		//sent out and new data is stored
+		//chrome.storage.local.set({'saved_pages': processPages(result.saved_pages)}, function() {
+		//});
 	});
 });
-
-
-
-
-
 
 //On Startup
 /*
