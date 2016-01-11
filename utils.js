@@ -1,11 +1,11 @@
-
+MAX_PRICE = 10000.0;
 
 
 function pages2Str(pages){
 
     var outStr = "";
     for (var key in pages){
-        outStr = outStr.concat(key + ',\t' + pages[key]["name"] + ',\t' + pages[key]["price"] + '\n');
+        outStr = outStr.concat(key + ',\t' + pages[key]["name"] + ',\t' + pages[key]["max_price"] + '\n');
     }
     return outStr;
 }
@@ -25,8 +25,8 @@ function str2Pages(response){
       itemStr = itemStr.split(",");
       savedPages[itemStr[0].trim()] = {}
       savedPages[itemStr[0].trim()]["name"] = itemStr[1].trim();
-      savedPages[itemStr[0].trim()]["price"] = parseFloat(itemStr[2]);
-      savedPages[itemStr[0].trim()]["old_price"] = "";
+      savedPages[itemStr[0].trim()]["max_price"] = parseFloat(itemStr[2]);
+      savedPages[itemStr[0].trim()]["old_price"] = MAX_PRICE;
   }
   return savedPages;
 }
