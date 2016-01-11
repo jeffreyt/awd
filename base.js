@@ -6,37 +6,42 @@ PRICE_NAME = 'a-size-large a-color-price olpOfferPrice a-text-bold'
 CONDITION_NAME = 'a-size-medium olpCondition a-text-bold'
 DESCRIPTION_NAME = 'comments'
 DEFAULT_CHECKTIME = 180.0;
+LISTING_LIMIT = 4;
 
+//Core Function
+//process pages
 
-function processPages(savedPages,resultPages){
+function processPages(savedPages){
   var toNotify = [];
   var count = Object.keys(savedPages).length;
   for (i in savedPages){
-    (function(keys){
-      var urlStr = amzId2Url(i);
+    (function(key){
+      var urlStr = amzId2Url(key);
       getData(urlStr,function(err,data){
         //console.log(data);
         count--;
-        //toNotify.push(processHTML(data,i,savedPages));
-        console.log(processHTML(data,i,savedPages));
+        toNotify.push(processHTML(data,key,savedPages));
+        //console.log(processHTML(data,key,savedPages));
         if (count < 1){
+          //processNotify will be called after all pages are retrieved
+          processNotify(toNotify,savedPages);
           //console.log(toNotify);
         }
       });
     })(i);
     //notice = processHTML(htmlStr);
   }
+  //async function used to get webpage html string
   function getData(url,callback){
     $.get(url,function(result){
       //console.log(result);
       callback(null,result)
     });
   };
-
 }
 
 function processHTML(htmlStr,key,savedPages){
-  newSavedPages = savedPages;
+  var notify = false;
   returnOffers = getOffers(htmlStr);
   var name = savedPages[key]['name'];
   var maxPrice = savedPages[key]['max_price'];
@@ -49,15 +54,15 @@ function processHTML(htmlStr,key,savedPages){
     lowestPrice = parseFloat(returnOffers[1][0][0].replace('$',''));
     if (lowestPrice <= maxPrice & lowestPrice < oldPrice){
       //item meets price criteria.  alert user
-      console.log('alert for lowest price sucka');
+      notify = true;
+      //console.log('alert for lowest price sucka');
     }
   }
   else{
     lowestPrice = MAX_PRICE;
   }
   //re-save oldPrice
-  newSavedPages[key]["old_price"] = lowestPrice;
-  notice = [savedPages[key],lowestPrice, returnOffers];
+  notice = [savedPages[key],lowestPrice, returnOffers, notify];
   //console.log(newSavedPages[key])
   //cleaning up
   returnOffers = null;
@@ -65,6 +70,41 @@ function processHTML(htmlStr,key,savedPages){
   //re-save newSavedPages
   //console.log(notice);
   return notice;
+}
+
+function processNotify(toNotify, savedPages){
+  //console.log(toNotify);
+  //step through
+  var willNotify = [];
+  for(i=0;i<toNotify.length;i++){
+    //console.log(toNotify[i]);
+    //modify savedPages
+    savedPages[toNotify[i][0]["key"]]["old_price"]=toNotify[i][1];
+
+    //build willNotify array
+    if (toNotify[i][3]){
+      //name
+      //link
+      //first few (limit in static vars) listings
+      vals = [toNotify[i][0]["name"],amzId2Url(toNotify[i][0]["key"])];
+      if (toNotify[i][2][0]>LISTING_LIMIT){
+        tempLists = toNotify[i][2][1].slice(0,4);
+      }
+      else tempLists = toNotify[i][2][1];
+      vals.push(tempLists);
+      willNotify.push(vals);
+    }
+  }
+  /*
+  chrome.storage.local.set({"saved_pages":savedPages},function(){
+  });
+  */
+  //steps for notifying
+  //1. possible text message/email
+  //2. notification
+  if (willNotify.length>0){
+    console.log(willNotify);
+  }
 }
 
 //getOffers
@@ -130,8 +170,6 @@ function exportPages(){
       document.getElementById("text_area").value = pages2Str(result.saved_pages);
   });
 }
-
-
 
 //Alarms
 
