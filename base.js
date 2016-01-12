@@ -95,14 +95,24 @@ function processNotify(toNotify, savedPages){
       willNotify.push(vals);
     }
   }
+
+  //MAKE SURE TO UNCOMMENT THIS PART
   /*
   chrome.storage.local.set({"saved_pages":savedPages},function(){
   });
   */
+
+
   //steps for notifying
   //1. possible text message/email
   //2. notification
-  setWillNotify(willNotify);
+  addWillNotify(willNotify);
+
+  if (willNotify.length>0){
+    //sendEmailText(willNotify);
+    fireNotification(willNotify);
+  }
+
 }
 
 //getOffers
@@ -121,7 +131,12 @@ function getOffers(response){
 	       //console.log(offers[j]);
 	       var price = offers[j].getElementsByClassName(PRICE_NAME)[0].innerText.trim();
 	       var condition = offers[j].getElementsByClassName(CONDITION_NAME)[0].innerText.replace(/\r?\n|\r/g, '').trim().replace(/\s+/g, ' ');
-	       var description = offers[j].getElementsByClassName(DESCRIPTION_NAME)[0].innerText.replace(/\r?\n|\r/g, '').trim().replace(/\s+/g, ' ');
+         condition = condition.replace("Used - ","");
+         condition = condition.replace("Acceptable","(A)");
+         condition = condition.replace("Very Good","(VG)");
+         condition = condition.replace("Good","(G)");
+         condition = condition.replace("Like New","(LN)");
+         var description = offers[j].getElementsByClassName(DESCRIPTION_NAME)[0].innerText.replace(/\r?\n|\r/g, '').trim().replace(/\s+/g, ' ');
 	       if (description.indexOf('\u00AB') > -1) {description = description.substring(0,description.indexOf('\u00AB'));}
 	       indArr.push(price);
 	       indArr.push(condition);
@@ -155,7 +170,6 @@ function getTradeIn(response){
 function importPages(response){
 
   savedPages = str2Pages(response);
-  console.log(savedPages);
   chrome.storage.local.set({'saved_pages': savedPages}, function() {
       // Notify that we saved.
       alert('Data Successfully Saved');
@@ -183,8 +197,21 @@ function cancelAlarm(alarmName){
 
 //Notifications
 
-function fireNotification(){
-  var opt = {type: "basic",title: "Your Title",message: "Your message",iconUrl: "icon.png"}
+function fireNotification(willNotify){
+  if (willNotify.length>1){
+    myTitle = "Deals Found"
+  }
+  else myTitle = "Deal Found";
+  msg = '';
+  for(i=0;i<willNotify.length;i++){
+    msg = msg+willNotify[i][0]+', '+willNotify[i][2][0][0]+' '+willNotify[i][2][0][1]+' ('+willNotify[i][2].length+' offers)\n'
+  }
+  var opt = {type: "basic",title: myTitle ,message: msg,iconUrl: "icon.png"}
+
+  
+
+
   chrome.notifications.create("notificationName",opt,function(){});
+  updateBadge(willNotify.length);
 
 }
