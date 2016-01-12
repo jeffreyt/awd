@@ -26,7 +26,7 @@ window.onload = function(){
       exportPages();
   });
   //save slider
-      document.getElementById("check_time_slider").addEventListener("change",function(){
+  document.getElementById("check_time_slider").addEventListener("change",function(){
       document.getElementById("check_time").value = document.getElementById("check_time_slider").value;
   })
   //save button

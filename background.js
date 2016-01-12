@@ -1,8 +1,8 @@
+var willNotify;
 
 chrome.storage.local.get("interval_time",function(result){
 	//set alarm
 	createAlarm("time_alarm",result.interval_time);
-	console.log('alarm is created');
 });
 chrome.alarms.onAlarm.addListener(function( alarm ) {
 	chrome.storage.local.get("saved_pages",function(result){
@@ -22,6 +22,15 @@ chrome.alarms.onAlarm.addListener(function( alarm ) {
 		//});
 	});
 });
+
+function setWillNotify(input){
+	willNotify = input;
+	chrome.storage.local.set({"notify":willNotify});
+}
+
+function getWillNotify(){
+	return willNotify;
+}
 
 //On Startup
 /*

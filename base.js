@@ -102,9 +102,7 @@ function processNotify(toNotify, savedPages){
   //steps for notifying
   //1. possible text message/email
   //2. notification
-  if (willNotify.length>0){
-    console.log(willNotify);
-  }
+  setWillNotify(willNotify);
 }
 
 //getOffers
