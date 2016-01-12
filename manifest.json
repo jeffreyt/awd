@@ -1,7 +1,7 @@
 {
   "description": "descriptions soon",
   "manifest_version": 2,
-  "name": "awd_monitor",
+  "name": "TinyMonitor",
   "permissions": [ "tabs",
                     "http://www.amazon.com/",
                     "https://www.amazon.com/",
@@ -12,8 +12,8 @@
                     "alarms" ],
   "version": "1.0",
   "browser_action":{
-	   "default_icon":"icon.png",
-     "default_title":"AWD Price",
+	   "default_icon":"imgs/icon.png",
+     "default_title":"TinyMonitor",
      "default_popup":"popup.htm"
   },
   "background": {

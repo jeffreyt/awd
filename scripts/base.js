@@ -5,7 +5,7 @@ DIV_TRADE_NAME = ''
 PRICE_NAME = 'a-size-large a-color-price olpOfferPrice a-text-bold'
 CONDITION_NAME = 'a-size-medium olpCondition a-text-bold'
 DESCRIPTION_NAME = 'comments'
-DEFAULT_CHECKTIME = 180.0;
+DEFAULT_CHECKTIME = 30.0;
 LISTING_LIMIT = 4;
 
 //Core Function
@@ -97,10 +97,10 @@ function processNotify(toNotify, savedPages){
   }
 
   //MAKE SURE TO UNCOMMENT THIS PART
-  /*
+
   chrome.storage.local.set({"saved_pages":savedPages},function(){
   });
-  */
+
 
 
   //steps for notifying
@@ -206,12 +206,12 @@ function fireNotification(willNotify){
   for(i=0;i<willNotify.length;i++){
     msg = msg+willNotify[i][0]+', '+willNotify[i][2][0][0]+' '+willNotify[i][2][0][1]+' ('+willNotify[i][2].length+' offers)\n'
   }
-  var opt = {type: "basic",title: myTitle ,message: msg,iconUrl: "icon.png"}
+  var opt = {type: "basic",title: myTitle ,message: msg,iconUrl: "imgs/icon.png"}
 
-  
-
-
-  chrome.notifications.create("notificationName",opt,function(){});
+  chrome.notifications.create("notificationName",opt,function(){
+    setTimeout(function(){
+      chrome.notifications.clear("notificationName", function(){})
+    }, 10000);
+  });
   updateBadge(willNotify.length);
-
 }

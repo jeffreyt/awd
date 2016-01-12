@@ -14,6 +14,9 @@ function pages2Str(pages){
 
 function str2Pages(response){
   //checking import text
+  if (response.length<1){
+    return {};
+  }
   response = response.trim("\n");
 
   //operating on input text

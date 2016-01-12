@@ -1,3 +1,6 @@
+
+
+
 var willNotify = [];
 
 
@@ -6,6 +9,7 @@ chrome.storage.local.get("interval_time",function(result){
 	//set alarm
 	createAlarm("time_alarm",result.interval_time);
 });
+
 chrome.alarms.onAlarm.addListener(function( alarm ) {
 	chrome.storage.local.get("saved_pages",function(result){
 		processPages(result.saved_pages);
@@ -51,4 +55,11 @@ function updateBadge(num){
 	else{
 		chrome.browserAction.setBadgeText({text: ''});
 	}
+}
+
+function refreshPages(){
+	chrome.storage.local.get("interval_time",function(result){
+		//set alarm
+		createAlarm("time_alarm",result.interval_time);
+	});
 }

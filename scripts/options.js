@@ -33,7 +33,7 @@ window.onload = function(){
   document.getElementById("save_options").addEventListener("click",function(){
     //get options to save
     var intervalTime = parseFloat(document.getElementById("check_time").value);
-    createAlarm("time_alarm",intervalTime);
+    //createAlarm("time_alarm",intervalTime);
     //possible more variables here
     //save options
 

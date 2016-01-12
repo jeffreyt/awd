@@ -8,7 +8,7 @@ window.onload = function(){
     bg.clearWillNotify();
     window.close();
   });
-  document.getElementById('check_all').addEventListener('click',function(){
+  document.getElementById('open_all').addEventListener('click',function(){
     var willNotify = bg.getWillNotify();
     //open all links in separate tabs
     for(i=0;i<willNotify.length;i++){
@@ -19,14 +19,30 @@ window.onload = function(){
     //close window
     window.close();
   });
+  document.getElementById('refresh_all').addEventListener('click',function(){
+    bg.refreshPages();
+    window.close();
+  })
+  document.getElementById('options').addEventListener('click',function(){
+    var optionsUrl = chrome.extension.getURL('options.htm');
+    chrome.tabs.query({url: optionsUrl}, function(tabs) {
+      if (tabs.length) {
+        chrome.tabs.update(tabs[0].id, {active: true});
+      }
+      else {
+        chrome.tabs.create({url: optionsUrl});
+      }
+    });
+  });
 }
 
 function loadListings(willNotify){
   console.log(willNotify);
   var main = $('#main_body');
   if(willNotify.length<1){
-    main.append('<div> No Changes </div>');
-    main.append('<br><hr>');
+    //main.append('<div> No Changes </div>');
+    main.append('<p align="center">No Changes</p>')
+    main.append('<hr>');
   }
   for(i=0;i<willNotify.length;i++){
     //console.log(willNotify[i]);
