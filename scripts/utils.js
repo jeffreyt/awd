@@ -92,7 +92,7 @@ function notify2CPText(willNotify){
   for(i in willNotify){
     notifyStr = notifyStr.concat(willNotify[i][0] + ' - '+willNotify[i][1]+'\n');
     for(j in willNotify[i][2]){
-      notifyStr = notifyStr.concat(willNotify[i][2][j][0] + ' '+ willNotify[i][2][j][1]+' '+willNotify[i][2][j][2]+'\n')
+      notifyStr = notifyStr.concat('- '+willNotify[i][2][j][0] + ' '+ willNotify[i][2][j][1]+' '+willNotify[i][2][j][2]+'\n')
     }
     notifyStr = notifyStr.concat('\n\n');
   }

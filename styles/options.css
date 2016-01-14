@@ -16,16 +16,20 @@ input {
 }
 
 .divider{
-    width:50px;
+    width:40px;
     height:auto;
     display:inline-block;
 }
 
 #check_time{
-  width:40px;
+  width:60px;
   padding:5px;
   text-align:center;
-  font-size:18;
+  font-size:16;
+}
+
+#check_time_slider{
+  width:10%;
 }
 
 .opts_first_line{
