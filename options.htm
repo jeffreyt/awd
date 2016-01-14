@@ -6,38 +6,45 @@
     <script type="text/javascript" src="scripts/base.js"></script>
     <script type="text/javascript" src="scripts/options.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="options.css">
+    <link rel="stylesheet" type="text/css" href="styles/options.css">
   </head>
   <body>
     <p style="text-align: center">
       <br>
     </p>
-    <h1 id="test" style="text-align: center">TinyMonitor Options</h1>
-    <h3 class="text-light" style="text-align: center">here are some options</h3>
+    <div id = "main_options">
+      <h1 id="test" style="text-align: center">TinyMonitor Options</h1>
+      <h3 class="text-light" style="text-align: center">here are some options</h3>
 
-    <p>check interval time</p>
-    <input id="check_time"><input id = "check_time_slider" type="range" min="0.01" max="60" value="0" step="1" />
-    <button id="save_options">
-      <span class title>Save</span>
-    </button>
-      <br>
-    <p>import saved items</p>
-    <textarea id= "text_area" rows="20" cols="80"></textarea><br><br>
-    <button id="import_perform">
-      <span class title>Import</span>
-    </button>
-    <button id="export_perform">
-      <span class title>Export</span>
-    </button>
-    <div id="current_monitor_popup">
-      <textarea rows="30" cols="80" id="current_monitor_text"></textarea>
-      <div id="current_monitor_buttons">
-        <button id="copy_text">Copy</button>
-        <button id="close_popup">Close</button>
+      <div class="opts_first_line">
+        <input type="checkbox" id="play_sound">Play Sound</input>
+        <div class="divider"></div>
+        <input id="check_time"><input id = "check_time_slider" type="range" min="0.02" max="60" value="0" step="1" />mins
+        <div class="divider"></div>
+        <button id ="import_export_button">Import/Export</button>
       </div>
-    </div>
-    <br>
-    <br>
-
+      <br>
+      <br>
+      <div class="opts_second_line">
+        <button id="save_options">Save</button>
+        <button id="reset_old_prices">Reset Old Prices</button>
+      </div>
+      <div id="screen_disable"></div>
+      <div id="import_export_popup">
+        <textarea rows="30" cols="80" id="import_export_text"></textarea>
+        <div id="import_export_buttons">
+          <button id="import_perform">
+            <span class title>Import</span>
+          </button>
+          <button id="export_perform">
+            <span class title>Export</span>
+          </button>
+          <button id="import_export_close">Close</button>
+        </div>
+      </div>
+      <br>
+      <br>
+      <hr>
+      <div id="monitored_pages"></div>
   </body>
 </html>

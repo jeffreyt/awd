@@ -34,10 +34,20 @@ window.onload = function(){
       }
     });
   });
+
+  //Open copy/paste window
+  document.getElementById('for_copy_paste').addEventListener('click',function(){
+    if (!popupWin){
+      var popupWin = PopupCenter('cppopup.htm', 'cp_window', 600, 600);
+      popupWin.document.write('');
+      popupWin.document.write('<h1 style="text-align:center">Copy/Paste</h1><br><textarea id="cp_text_area" rows="20" cols="80"></textarea>');
+      var notifyStr = notify2CPText(bg.getWillNotify());
+      popupWin.document.getElementById("cp_text_area").value = notifyStr;
+    }
+  })
 }
 
 function loadListings(willNotify){
-  console.log(willNotify);
   var main = $('#main_body');
   if(willNotify.length<1){
     //main.append('<div> No Changes </div>');

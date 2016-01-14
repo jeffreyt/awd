@@ -1,12 +1,14 @@
 
 //constants
 DIV_NAME = 'a-row a-spacing-mini olpOffer'
-DIV_TRADE_NAME = ''
+DIV_TRADE_NAME = 'tradeInButton_tradeInValue'
 PRICE_NAME = 'a-size-large a-color-price olpOfferPrice a-text-bold'
 CONDITION_NAME = 'a-size-medium olpCondition a-text-bold'
 DESCRIPTION_NAME = 'comments'
 DEFAULT_CHECKTIME = 30.0;
 LISTING_LIMIT = 4;
+
+debug = false;
 
 //Core Function
 //process pages
@@ -49,13 +51,10 @@ function processHTML(htmlStr,key,savedPages){
   //console.log(oldPrice);
   //if there are any offers, check against max price
   if (returnOffers[0]>0){
-    //console.log(name);
-    //console.log(parseFloat(returnOffers[1][0][0].replace('$','')));
     lowestPrice = parseFloat(returnOffers[1][0][0].replace('$',''));
     if (lowestPrice <= maxPrice & lowestPrice < oldPrice){
       //item meets price criteria.  alert user
       notify = true;
-      //console.log('alert for lowest price sucka');
     }
   }
   else{
@@ -63,21 +62,17 @@ function processHTML(htmlStr,key,savedPages){
   }
   //re-save oldPrice
   notice = [savedPages[key],lowestPrice, returnOffers, notify];
-  //console.log(newSavedPages[key])
   //cleaning up
   returnOffers = null;
   urlStr = null;
   //re-save newSavedPages
-  //console.log(notice);
   return notice;
 }
 
 function processNotify(toNotify, savedPages){
-  //console.log(toNotify);
   //step through
   var willNotify = [];
   for(i=0;i<toNotify.length;i++){
-    //console.log(toNotify[i]);
     //modify savedPages
     savedPages[toNotify[i][0]["key"]]["old_price"]=toNotify[i][1];
 
@@ -95,14 +90,11 @@ function processNotify(toNotify, savedPages){
       willNotify.push(vals);
     }
   }
-
   //MAKE SURE TO UNCOMMENT THIS PART
-
-  chrome.storage.local.set({"saved_pages":savedPages},function(){
-  });
-
-
-
+  if(!debug){
+    chrome.storage.local.set({"saved_pages":savedPages},function(){
+    });
+  }
   //steps for notifying
   //1. possible text message/email
   //2. notification
@@ -156,7 +148,8 @@ function getOffers(response){
 function getTradeIn(response){
     var el = document.createElement( 'html' );
     el.innerHTML = response;
-    var tradeVal = el.getElementsByClassName(DIV_TRADE_NAME);
+    var tradeVal = el.getElementById(DIV_TRADE_NAME).innerHTML;
+    console.log(tradeVal);
 }
 
 
@@ -179,7 +172,7 @@ function importPages(response){
 function exportPages(){
   var varName = 'saved_pages';
   chrome.storage.local.get(varName,function(result){
-      document.getElementById("text_area").value = pages2Str(result.saved_pages);
+      document.getElementById("import_export_text").value = pages2Str(result.saved_pages);
   });
 }
 

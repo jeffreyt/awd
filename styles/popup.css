@@ -1,0 +1,15 @@
+html {
+  font-size:24px;
+}
+
+button {
+  font-size:12px;
+}
+
+.popup_buttons{
+  text-align: right;
+}
+
+#main_body{
+  text-align: center;
+}

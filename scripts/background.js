@@ -2,7 +2,17 @@
 
 
 var willNotify = [];
+var bgOptions;
 
+//***********************On startup******************************//
+
+chrome.storage.local.get("options",function(result){
+	if (typeof result === "undefined"){
+		bgOptions = {"play_sound":true};
+		chrome.storage.local.set({"options":bgOptions});
+	}
+	else bgOptions = result.options;
+});
 
 
 chrome.storage.local.get("interval_time",function(result){
@@ -13,8 +23,16 @@ chrome.storage.local.get("interval_time",function(result){
 chrome.alarms.onAlarm.addListener(function( alarm ) {
 	chrome.storage.local.get("saved_pages",function(result){
 		processPages(result.saved_pages);
+		//
 	});
 });
+
+//*************************************************************//
+//*************************************************************//
+
+function getOptions(){
+	return bgOptions;
+}
 
 function addWillNotify(input){
 	//willNotify = input;
@@ -57,9 +75,11 @@ function updateBadge(num){
 	}
 }
 
+//refreshPages
+//immediately refresh all pages
+
 function refreshPages(){
-	chrome.storage.local.get("interval_time",function(result){
-		//set alarm
-		createAlarm("time_alarm",result.interval_time);
+	chrome.storage.local.get("saved_pages",function(result){
+		processPages(result.saved_pages);
 	});
 }

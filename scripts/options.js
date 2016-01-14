@@ -1,6 +1,12 @@
 
 window.onload = function(){
 
+  //get options
+  /*
+  var bg = chrome.extension.getBackgroundPage();
+  var opts = bg.getOptions();
+  console.log(opts);
+  */
   //loading saved options
   chrome.storage.local.get("interval_time",function(result){
     //if saved options dont exist use defaults and save
@@ -16,13 +22,32 @@ window.onload = function(){
     }
   });
 
+  document.getElementById("import_export_button").addEventListener('click',function(){
+    $('#import_export_popup').fadeToggle("fast",function(){
+
+    });
+    $('#screen_disable').fadeToggle("fast",function(){
+
+    });
+
+  });
+
+  document.getElementById("import_export_close").addEventListener('click',function(){
+    $('#import_export_popup').fadeToggle("fast",function(){
+
+    });
+    $('#screen_disable').fadeToggle("fast",function(){
+
+    });
+  });
+
   document.getElementById("import_perform").addEventListener('click',function(){
-      var importText = document.getElementById("text_area").value
+      var importText = document.getElementById("import_export_text").value
       importPages(importText);
   });
   //export button
   document.getElementById("export_perform").addEventListener('click',function(){
-      document.getElementById("text_area").value = "";
+      document.getElementById("import_export_text").value = "";
       exportPages();
   });
   //save slider
@@ -42,5 +67,17 @@ window.onload = function(){
       document.getElementById("check_time_slider").value = intervalTime;
      })
 
+  });
+  //reset old prices
+  document.getElementById("reset_old_prices").addEventListener("click",function(){
+    chrome.storage.local.get("saved_pages",function(response){
+
+      for(i in response.saved_pages){
+        response.saved_pages[i]["old_price"]=MAX_PRICE;
+      }
+      chrome.storage.local.set({"saved_pages":response.saved_pages},function(){
+        alert('Old Prices Have Been Reset');
+      });
+    })
   })
 }
