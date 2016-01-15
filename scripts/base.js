@@ -226,6 +226,12 @@ function fireNotification(willNotify){
   var opt = {type: "basic",title: myTitle ,message: msg,iconUrl: "imgs/icon.png"}
 
   chrome.notifications.create("notificationName",opt,function(){
+    var bg = chrome.extension.getBackgroundPage();
+    bgOptions = bg.getOptions();
+    if (bgOptions["play_sound"]){
+      var audio = new Audio('audio/cuckoo.ogg');
+      audio.play();
+    }
     setTimeout(function(){
       chrome.notifications.clear("notificationName", function(){})
     }, 10000);

@@ -34,6 +34,10 @@ function getOptions(){
 	return bgOptions;
 }
 
+function setOptions(response){
+	bgOptions = response;
+}
+
 function addWillNotify(input){
 	//willNotify = input;
 	chrome.storage.local.get("notify",function(response){

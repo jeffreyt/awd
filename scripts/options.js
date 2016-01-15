@@ -83,7 +83,16 @@ window.onload = function(){
         alert('Old Prices Have Been Reset');
       });
     })
-  })
+  });
+  document.getElementById("play_sound").addEventListener('click',function(result){
+    var bg=chrome.extension.getBackgroundPage();
+    if(document.getElementById("play_sound").checked){
+      bg.setOptions({"play_sound":true});
+    }
+    else{
+      bg.setOptions({"play_sound":false});
+    }
+  });
 }
 
 function refreshOptionsPage(){
@@ -98,7 +107,7 @@ function refreshOptionsPage(){
     var monitoredPages = $('#monitored_pages');
     monitoredPages.append('<div class="single_entry_full"><p class="single_entry_ind">Amazon ID</p><div class="divider"></div><p class="single_entry_ind">Name</p><div class="divider"></div><p class="single_entry_ind">Max Price</p><div class="divider"></div><p class="single_entry_ind">Last Refresh</p></div><HR WIDTH="50%" SIZE="3" NOSHADE>')
     for (i in savedPages){
-      console.log(getOptsEntry(savedPages[i]));
+      //console.log(getOptsEntry(savedPages[i]));
       monitoredPages.append(getOptsEntry(savedPages[i]));
     }
   }
