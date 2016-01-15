@@ -16,7 +16,9 @@ function getOptsTitle(num){
 function getOptsEntry(entry){
   var returnStr;
 
-  returnStr = '<div class="single_entry"><p>'+entry["key"]+'</p><a href="'+amzId2Url(entry["key"])+'>'+entry["name"]+'</a><p>$'+entry["max_price"]+'</p><p>'+entry["last_refresh"]+'</p>'
+  //returnStr = '<div class="single_entry_full>"<p class="amzid_col">'+entry["key"]+'</p><div class="divider"></div><a class="single_entry_ind" href="'+amzId2Url(entry["key"])+'">'+entry["name"]+'</a>';
+
+  returnStr = '<div class="single_entry_full"><p class="single_entry_ind">'+entry["key"]+'</p><div class="divider"></div><a class="single_entry_ind" href="'+amzId2Url(entry["key"])+'">'+entry["name"]+'</a><div class="divider"></div><p class="single_entry_ind">$'+entry["max_price"]+'</p><div class="divider"></div><p class="single_entry_ind">'+entry["last_refresh"]+'</p></div><HR WIDTH="50%" SIZE="3" NOSHADE>'
 
   return returnStr;
 

@@ -23,12 +23,21 @@ function processPages(savedPages){
       getData(urlStr,function(err,data){
         //console.log(data);
         count--;
-        toNotify.push(processHTML(data,key,savedPages));
-        //console.log(processHTML(data,key,savedPages));
-        if (count < 1){
-          //processNotify will be called after all pages are retrieved
-          processNotify(toNotify,savedPages);
-          //console.log(toNotify);
+
+        tempPages = processHTML(data,key,savedPages);
+        if (tempPages[0]){
+          toNotify.push(tempPages[1]);
+          //console.log(processHTML(data,key,savedPages));
+          if (count < 1){
+            //processNotify will be called after all pages are retrieved
+            processNotify(toNotify,savedPages);
+            //console.log(toNotify);
+          }
+        }
+        else{
+          //robot check went off kill everything
+          killAllAlert(tempPages);
+          count=0;
         }
       });
     })(i);
@@ -46,9 +55,9 @@ function processPages(savedPages){
 function processHTML(htmlStr,key,savedPages){
   var notify = false;
   returnOffers = getOffers(htmlStr);
-  if (returnOffers == -1){
+  if (returnOffers[0]<0){
     //robot check went off, return false
-    //return [false,htmlStr];
+    return [false,htmlStr];
   }
   var name = savedPages[key]['name'];
   var maxPrice = savedPages[key]['max_price'];
@@ -71,7 +80,7 @@ function processHTML(htmlStr,key,savedPages){
   returnOffers = null;
   urlStr = null;
   //re-save newSavedPages
-  return notice;
+  return [true,notice];
 }
 
 function processNotify(toNotify, savedPages){
@@ -118,9 +127,18 @@ function processNotify(toNotify, savedPages){
 //output: number of offers (int), offers (dictionary)
 
 function getOffers(response){
+
+    var bot = response.search("Robot Check");
+    if(bot > -1){
+      //robot check went off.  kill everything
+      return [-1,null];
+    }
+
     var el = document.createElement( 'html' );
     el.innerHTML = response;
     var offers = el.getElementsByClassName(DIV_NAME);
+
+
     if (offers.length > 0){
 	   var allOffers = []
 	   for (j=0;j<offers.length;j++){
@@ -213,4 +231,12 @@ function fireNotification(willNotify){
     }, 10000);
   });
   updateBadge(willNotify.length);
+}
+
+function killAllAlert(tempPages){
+  chrome.alarms.clear("time_alarm");
+  var opt = {type: "basic",title: 'ROBOT CHECK' ,message: 'Robot check went off.  Checking has been suspended until you manually refresh.  Please solve the captcha then refresh.',iconUrl: "imgs/icon.png"}
+  chrome.notifications.create("notificationName",opt,function(){
+    var popupWin = PopupCenter(tempPages[1], 'cp_window', 600, 600);
+  });
 }
