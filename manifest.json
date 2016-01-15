@@ -1,5 +1,5 @@
 {
-  "description": "descriptions soon",
+  "description": "TinyMonitor monitors prices from Amazon Warehouse Deals.",
   "manifest_version": 2,
   "name": "TinyMonitor",
   "permissions": [ "tabs",
@@ -10,12 +10,19 @@
                     "unlimitedStorage",
                     "notifications",
                     "alarms" ],
-  "version": "1.0",
+  "version": "0.9",
   "browser_action":{
 	   "default_icon":"imgs/icon.png",
      "default_title":"TinyMonitor",
      "default_popup":"popup.htm"
   },
+
+  "icons": {
+    "16":"imgs/icon16.png",
+    "48":"imgs/icon48.png",
+    "128":"imgs/icon128.png"
+  },
+
   "background": {
     "page": "background.htm",
 	  "persistent": true

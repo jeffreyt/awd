@@ -7,6 +7,7 @@ CONDITION_NAME = 'a-size-medium olpCondition a-text-bold'
 DESCRIPTION_NAME = 'comments'
 DEFAULT_CHECKTIME = 30.0;
 LISTING_LIMIT = 4;
+MINS2MS = 60000
 
 debug = false;
 
@@ -45,6 +46,10 @@ function processPages(savedPages){
 function processHTML(htmlStr,key,savedPages){
   var notify = false;
   returnOffers = getOffers(htmlStr);
+  if (returnOffers == -1){
+    //robot check went off, return false
+    //return [false,htmlStr];
+  }
   var name = savedPages[key]['name'];
   var maxPrice = savedPages[key]['max_price'];
   var oldPrice = savedPages[key]['old_price'];
@@ -90,11 +95,12 @@ function processNotify(toNotify, savedPages){
       willNotify.push(vals);
     }
   }
-  //MAKE SURE TO UNCOMMENT THIS PART
+  savedPages = updateTime(savedPages);
   if(!debug){
     chrome.storage.local.set({"saved_pages":savedPages},function(){
     });
   }
+
   //steps for notifying
   //1. possible text message/email
   //2. notification
@@ -104,7 +110,6 @@ function processNotify(toNotify, savedPages){
     //sendEmailText(willNotify);
     fireNotification(willNotify);
   }
-
 }
 
 //getOffers
@@ -161,8 +166,9 @@ function getTradeIn(response){
 //output:
 
 function importPages(response){
-
+  var bg = chrome.extension.getBackgroundPage();
   savedPages = str2Pages(response);
+  bg.setSavedPages(savedPages);
   chrome.storage.local.set({'saved_pages': savedPages}, function() {
       // Notify that we saved.
       alert('Data Successfully Saved');

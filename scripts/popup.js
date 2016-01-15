@@ -40,7 +40,7 @@ window.onload = function(){
     if (!popupWin){
       var popupWin = PopupCenter('cppopup.htm', 'cp_window', 600, 600);
       popupWin.document.write('');
-      popupWin.document.write('<h1 style="text-align:center">Copy/Paste</h1><br><textarea id="cp_text_area" rows="20" cols="80"></textarea>');
+      popupWin.document.write('<h1 style="text-align:center">Copy/Paste</h1><br><textarea id="cp_text_area" rows="35" cols="80"></textarea>');
       var notifyStr = notify2CPText(bg.getWillNotify());
       popupWin.document.getElementById("cp_text_area").value = notifyStr;
     }

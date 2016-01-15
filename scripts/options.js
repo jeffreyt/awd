@@ -1,6 +1,5 @@
 
 window.onload = function(){
-
   //get options
   /*
   var bg = chrome.extension.getBackgroundPage();
@@ -8,6 +7,8 @@ window.onload = function(){
   console.log(opts);
   */
   //loading saved options
+  refreshOptionsPage();
+
   chrome.storage.local.get("interval_time",function(result){
     //if saved options dont exist use defaults and save
     if (typeof result.interval_time == 'undefined'){
@@ -65,6 +66,9 @@ window.onload = function(){
     chrome.storage.local.set({"interval_time":intervalTime},function(){
       console.log("Successfully saved");
       document.getElementById("check_time_slider").value = intervalTime;
+      setTimeout(function(){
+        chrome.alarms.set("time_alarm",intervalTime);
+      },intervalTime*MINS2MS);
      })
 
   });
@@ -80,4 +84,25 @@ window.onload = function(){
       });
     })
   })
+}
+
+function refreshOptionsPage(){
+  var bg = chrome.extension.getBackgroundPage();
+  savedPages = bg.getSavedPages();
+  var title = $('#monitored_pages_title');
+  if(savedPages === undefined || Object.keys(savedPages).length < 1){
+    title.append(getOptsTitle(false));
+  }
+  else {
+    title.append(getOptsTitle(true));
+    var monitoredPages = $('monitored_pages');
+    for (i in savedPages){
+      console.log(getOptsEntry(savedPages[i]));
+    }
+  }
+
+
+
+
+
 }

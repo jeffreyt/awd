@@ -1,5 +1,6 @@
 body {
     background-color: lightgray;
+    font-family: 'Open Sans';
 }
 
 div {
@@ -89,4 +90,8 @@ input {
 }
 button:last-child{
     left:100px;
+}
+
+.opts_mon_title{
+  text-align: center;
 }

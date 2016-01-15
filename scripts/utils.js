@@ -31,6 +31,7 @@ function str2Pages(response){
       savedPages[itemStr[0].trim()]["name"] = itemStr[1].trim();
       savedPages[itemStr[0].trim()]["max_price"] = parseFloat(itemStr[2]);
       savedPages[itemStr[0].trim()]["old_price"] = MAX_PRICE;
+      savedPages[itemStr[0].trim()]["last_refresh"] = "Never";
   }
   return savedPages;
 }
@@ -98,4 +99,14 @@ function notify2CPText(willNotify){
   }
   console.log(notifyStr);
   return notifyStr;
+}
+
+//updateTime
+
+function updateTime(savedPages){
+  var d = Date();
+  for(i in savedPages){
+    savedPages[i]["last_refresh"]=d;
+  }
+  return savedPages;
 }

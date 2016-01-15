@@ -1,5 +1,5 @@
 <!doctype html>
-<html style="min-width:400px">
+<html>
   <head>
     <title>TinyMonitor</title>
     <script type="text/javascript" src="lib/jquery-1.7.1.js"></script>
@@ -11,12 +11,15 @@
   <body>
     <div id="main_body"></div>
     <div class="popup_buttons">
-      <button id="open_all">Open All in Tabs</button>
-      <button id="refresh_all">Refresh</button>
-      <button id="clear_all">Clear All</button>
-      <br>
-      <button id="options">Options</button>
-      <button id="for_copy_paste">Copy/Paste</button>
+      <div class="buttons_top">
+        <button id="open_all">Open All in Tabs</button>
+        <button id="refresh_all">Refresh</button>
+        <button id="clear_all">Clear All</button>
+      </div>
+      <div class="buttons_bottom">
+        <button id="options">Options</button>
+        <button id="for_copy_paste">Copy/Paste</button>
+      </div>
     </div>
   </body>
 </html>
