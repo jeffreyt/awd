@@ -1,4 +1,17 @@
 MAX_PRICE = 10000.0;
+MONTHS={0:"Jan",
+        1:"Feb",
+        2:"Mar",
+        3:"Apr",
+        4:"May",
+        5:"Jun",
+        6:"Jul",
+        7:"Aug",
+        8:"Sept",
+        9:"Oct",
+        10:"Nov",
+        11:"Dec"
+}
 
 
 function pages2Str(pages){
@@ -104,9 +117,15 @@ function notify2CPText(willNotify){
 //updateTime
 
 function updateTime(savedPages){
-  var d = Date();
+  var d = new Date();
+  var newD = MONTHS[d.getMonth()]+' '+d.getDate()+', '+d.getHours()+':'+twoDigit(d.getMinutes())+':'+twoDigit(d.getSeconds());
   for(i in savedPages){
-    savedPages[i]["last_refresh"]=d;
+    savedPages[i]["last_refresh"]=newD;
   }
   return savedPages;
+}
+
+function twoDigit(number) {
+  var twodigit = number >= 10 ? number : "0"+number.toString();
+  return twodigit;
 }

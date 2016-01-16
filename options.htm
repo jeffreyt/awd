@@ -17,16 +17,21 @@
       <h1 id="test" style="text-align: center">TinyMonitor Options</h1>
       <br>
       <div class="opts_first_line">
-        <input type="checkbox" id="play_sound">Play Sound</input>
+        <span>Sound</span>
+        <select id="alert_sound">
+          <option value=0>None</option>
+          <option value=1>Cuckoo</option>
+          <option value=2>Bell</option>
+        </select>
         <div class="divider"></div>
         <input id="check_time"><input id = "check_time_slider" type="range" min="0.02" max="60" value="0" step="1" />mins
         <div class="divider"></div>
-        <button id ="import_export_button">Import/Export</button>
+        <button id="save_options">Save Time</button>
       </div>
       <br>
       <br>
       <div class="opts_second_line">
-        <button id="save_options">Save</button>
+        <button id ="import_export_button">Import/Export</button>
         <button id="reset_old_prices" title="This will reset all your old prices.  Next time, any price below your maximum value will be shown.">Reset Old Prices</button>
       </div>
       <div id="screen_disable"></div>
@@ -47,6 +52,8 @@
       <hr>
       <div id="monitored_pages_title"></div>
       <br>
-      <div id="monitored_pages"></div>
+      <div id="monitored_pages">
+        <table id="pages_table"></table>
+      </div>
   </body>
 </html>

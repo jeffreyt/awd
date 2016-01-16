@@ -1,4 +1,6 @@
 
+var bg = chrome.extension.getBackgroundPage();
+
 window.onload = function(){
   //get options
   /*
@@ -57,6 +59,8 @@ window.onload = function(){
   })
   //save button
   document.getElementById("save_options").addEventListener("click",function(){
+    //var bg =
+
     //get options to save
     var intervalTime = parseFloat(document.getElementById("check_time").value);
     //createAlarm("time_alarm",intervalTime);
@@ -64,7 +68,7 @@ window.onload = function(){
     //save options
 
     chrome.storage.local.set({"interval_time":intervalTime},function(){
-      console.log("Successfully saved");
+      alert('New interval time has been saved.')
       document.getElementById("check_time_slider").value = intervalTime;
       setTimeout(function(){
         chrome.alarms.set("time_alarm",intervalTime);
@@ -84,19 +88,19 @@ window.onload = function(){
       });
     })
   });
-  document.getElementById("play_sound").addEventListener('click',function(result){
-    var bg=chrome.extension.getBackgroundPage();
-    if(document.getElementById("play_sound").checked){
-      bg.setOptions({"play_sound":true});
-    }
-    else{
-      bg.setOptions({"play_sound":false});
-    }
-  });
+  var sel = document.getElementById('alert_sound');
+  sel.onchange = function(){
+    bg.setOptions({"play_sound":sel.value});
+  }
 }
 
 function refreshOptionsPage(){
-  var bg = chrome.extension.getBackgroundPage();
+  //var bg = chrome.extension.getBackgroundPage();
+
+  //set sound drop down
+  bgOptions = bg.getOptions();
+  document.getElementById("alert_sound").value = bgOptions["play_sound"];
+
   savedPages = bg.getSavedPages();
   var title = $('#monitored_pages_title');
   if(savedPages === undefined || Object.keys(savedPages).length < 1){
@@ -105,15 +109,45 @@ function refreshOptionsPage(){
   else {
     title.append(getOptsTitle(true));
     var monitoredPages = $('#monitored_pages');
-    monitoredPages.append('<div class="single_entry_full"><p class="single_entry_ind">Amazon ID</p><div class="divider"></div><p class="single_entry_ind">Name</p><div class="divider"></div><p class="single_entry_ind">Max Price</p><div class="divider"></div><p class="single_entry_ind">Last Refresh</p></div><HR WIDTH="50%" SIZE="3" NOSHADE>')
+    //monitoredPages.append('<div class="single_entry_full"><p class="single_entry_ind">Amazon ID</p><div class="divider"></div><p class="single_entry_ind">Name</p><div class="divider"></div><p class="single_entry_ind">Max Price</p><div class="divider"></div><p class="single_entry_ind">Last Refresh</p></div><HR WIDTH="50%" SIZE="3" NOSHADE>')
+    var table = document.getElementById("pages_table");
+    //create header
+    var header = table.createTHead();
+    var row = header.insertRow(0);
+    row.style.fontWeight="bold";
+    row.style.fontSize="20px";
+    var id_cell = row.insertCell(0);
+    var name_cell = row.insertCell(1);
+    var price_cell = row.insertCell(2);
+    var time_cell = row.insertCell(3);
+
+    //id_cell.style.fontWeight="bold";
+    id_cell.innerHTML = 'Amazon ID';
+    name_cell.innerHTML = 'Name/Link';
+    price_cell.innerHTML = 'Max Price';
+    time_cell.innerHTML = 'Last Checked';
+
+    //sorting array by name instead of amazon id
+    var sortable = [];
+    for (var i in savedPages) sortable.push([savedPages[i]["name"], savedPages[i]])
+    sortable.sort(function(a, b) {
+      return a[0].localeCompare(b[0]);
+    });
+    savedPages = sortable;
+    //console.log(sortable.sort(function(a, b) {return a[0] - b[0]}))
     for (i in savedPages){
+      var row = table.insertRow(-1);
+      var id_cell = row.insertCell(0);
+      var name_cell = row.insertCell(1);
+      var price_cell = row.insertCell(2);
+      var time_cell = row.insertCell(3);
+
+      id_cell.innerHTML = savedPages[i][1]["key"];
+      name_cell.innerHTML = '<a href="'+amzId2Url(savedPages[i][1]["key"])+'">'+savedPages[i][1]["name"]+'</a>';
+      price_cell.innerHTML = '$'+savedPages[i][1]["max_price"];
+      time_cell.innerHTML = savedPages[i][1]["last_refresh"];
       //console.log(getOptsEntry(savedPages[i]));
-      monitoredPages.append(getOptsEntry(savedPages[i]));
+      //monitoredPages.append(getOptsEntry(savedPages[i]));
     }
   }
-
-
-
-
-
 }

@@ -6,12 +6,12 @@ var bgOptions;
 var savedPages;
 //***********************On startup******************************//
 
-chrome.storage.local.get("options",function(result){
-	if (typeof result === "undefined"){
-		bgOptions = {"play_sound":true};
+chrome.storage.local.get("options",function(response){
+	if (typeof response === "undefined"){
+		bgOptions = {"play_sound":0};
 		chrome.storage.local.set({"options":bgOptions});
 	}
-	else bgOptions = result.options;
+	else bgOptions = response.options;
 });
 
 
@@ -36,6 +36,7 @@ function getOptions(){
 
 function setOptions(response){
 	bgOptions = response;
+	chrome.storage.local.set({"options":bgOptions});
 }
 
 function addWillNotify(input){

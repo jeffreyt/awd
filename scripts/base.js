@@ -105,6 +105,7 @@ function processNotify(toNotify, savedPages){
     }
   }
   savedPages = updateTime(savedPages);
+  console.log(savedPages);
   if(!debug){
     chrome.storage.local.set({"saved_pages":savedPages},function(){
     });
@@ -225,11 +226,20 @@ function fireNotification(willNotify){
   }
   var opt = {type: "basic",title: myTitle ,message: msg,iconUrl: "imgs/icon.png"}
 
+  //change here for different notification popup
+
+
+
+
   chrome.notifications.create("notificationName",opt,function(){
     var bg = chrome.extension.getBackgroundPage();
     bgOptions = bg.getOptions();
-    if (bgOptions["play_sound"]){
+    if (bgOptions["play_sound"]==1){
       var audio = new Audio('audio/cuckoo.ogg');
+      audio.play();
+    }
+    if (bgOptions["play_sound"]==2){
+      var audio = new Audio('audio/bell.ogg');
       audio.play();
     }
     setTimeout(function(){
@@ -238,6 +248,12 @@ function fireNotification(willNotify){
   });
   updateBadge(willNotify.length);
 }
+
+
+
+
+
+
 
 function killAllAlert(tempPages){
   chrome.alarms.clear("time_alarm");
