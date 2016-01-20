@@ -9,6 +9,12 @@ window.onload = function(){
   console.log(opts);
   */
   //loading saved options
+
+  var manifest = chrome.runtime.getManifest();
+  document.getElementById("version_num").innerHTML='ver '+manifest.version;
+  //console.log(manifest.name);
+  //console.log(manifest.version);
+
   refreshOptionsPage();
 
   chrome.storage.local.get("interval_time",function(result){
@@ -92,13 +98,26 @@ window.onload = function(){
   sel.onchange = function(){
     bg.setOptions({"play_sound":sel.value});
   }
+
+  //test email
+  /*
+  document.getElementById("test_email").addEventListener("click",function(){
+
+  });
+  */
 }
 
 function refreshOptionsPage(){
   //var bg = chrome.extension.getBackgroundPage();
 
   //set sound drop down
-  bgOptions = bg.getOptions();
+  var bgOptions = bg.getOptions();
+  if (typeof bgOptions === "undefined"){
+    bgOptions = {};
+    bgOptions["play_sound"]=0;
+    console.log(bgOptions);
+
+  }
   document.getElementById("alert_sound").value = bgOptions["play_sound"];
 
   savedPages = bg.getSavedPages();

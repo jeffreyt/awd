@@ -129,3 +129,20 @@ function twoDigit(number) {
   var twodigit = number >= 10 ? number : "0"+number.toString();
   return twodigit;
 }
+
+function url2AzId(url){
+  spUrl=url.split("/");
+  possibleID = []
+  for(i in spUrl){
+    if(spUrl[i].length==10){
+      possibleID.push(spUrl[i]);
+    }
+  }
+  if (possibleID.length==1){
+    return possibleID[0];
+  }
+
+
+
+
+}

@@ -16,6 +16,10 @@ input {
 
 }
 
+#version_num{
+  text-align: center;
+}
+
 .divider{
     width:40px;
     height:auto;

@@ -23,21 +23,22 @@ function processPages(savedPages){
       getData(urlStr,function(err,data){
         //console.log(data);
         count--;
-
-        tempPages = processHTML(data,key,savedPages);
-        if (tempPages[0]){
-          toNotify.push(tempPages[1]);
-          //console.log(processHTML(data,key,savedPages));
-          if (count < 1){
-            //processNotify will be called after all pages are retrieved
-            processNotify(toNotify,savedPages);
-            //console.log(toNotify);
+        if (count>-1){
+          tempPages = processHTML(data,key,savedPages);
+          if (tempPages[0]){
+            toNotify.push(tempPages[1]);
+            //console.log(processHTML(data,key,savedPages));
+            if (count < 1){
+              //processNotify will be called after all pages are retrieved
+              processNotify(toNotify,savedPages);
+              //console.log(toNotify);
+            }
           }
-        }
-        else{
-          //robot check went off kill everything
-          killAllAlert(tempPages);
-          count=0;
+          else{
+            //robot check went off kill everything
+            killAllAlert(tempPages);
+            count=-1;
+          }
         }
       });
     })(i);
@@ -224,11 +225,17 @@ function fireNotification(willNotify){
   for(i=0;i<willNotify.length;i++){
     msg = msg+willNotify[i][0]+', '+willNotify[i][2][0][0]+' '+willNotify[i][2][0][1]+' ('+willNotify[i][2].length+' offers)\n'
   }
-  var opt = {type: "basic",title: myTitle ,message: msg,iconUrl: "imgs/icon.png"}
+  var opt = {type: "basic",title: myTitle ,message: msg, buttons: [{
+        title: "Open All Pages",
+        iconUrl: "imgs/icon.png"
+    },
+    {
+        title: "Dismiss",
+        iconUrl: "imgs/icon.png"
+    }], iconUrl: "imgs/icon.png"
+  }
 
   //change here for different notification popup
-
-
 
 
   chrome.notifications.create("notificationName",opt,function(){
@@ -249,6 +256,18 @@ function fireNotification(willNotify){
   updateBadge(willNotify.length);
 }
 
+chrome.notifications.onButtonClicked.addListener(function(notifId, btnIdx) {
+  if (btnIdx === 0) {
+    for(i=0;i<willNotify.length;i++){
+      chrome.tabs.create({ url: willNotify[i][1]});
+    }
+    //clear willNotify and clear badge
+    clearWillNotify();
+    chrome.notifications.clear("notificationName");
+  } else if (btnIdx === 1) {
+    chrome.notifications.clear("notificationName");
+  }
+});
 
 
 
@@ -261,4 +280,7 @@ function killAllAlert(tempPages){
   chrome.notifications.create("notificationName",opt,function(){
     var popupWin = PopupCenter(tempPages[1], 'cp_window', 600, 600);
   });
+  chrome.notifications.onClicked.addListener(function(tempPages){
+    chrome.tabs.create({ url: tempPages[1] });
+  })
 }

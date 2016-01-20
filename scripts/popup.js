@@ -44,7 +44,21 @@ window.onload = function(){
       var notifyStr = notify2CPText(bg.getWillNotify());
       popupWin.document.getElementById("cp_text_area").value = notifyStr;
     }
-  })
+  });
+  document.getElementById('add_remove').addEventListener('click',function(){
+    // Do NOT forget that the method is ASYNCHRONOUS
+    chrome.tabs.query({
+      active: true,               // Select active tabs
+      lastFocusedWindow: true     // In the current window
+    }, function(array_of_Tabs) {
+      // Since there can only be one active tab in one active window,
+      //  the array has only one element
+      var tab = array_of_Tabs[0];
+      // Example:
+      url2AzId(tab.url);
+      
+    });
+  });
 }
 
 function loadListings(willNotify){
