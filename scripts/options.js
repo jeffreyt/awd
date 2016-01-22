@@ -33,7 +33,7 @@ window.onload = function(){
 
   document.getElementById("import_export_button").addEventListener('click',function(){
     $('#import_export_popup').fadeToggle("fast",function(){
-
+      //refreshOptionsPage();
     });
     $('#screen_disable').fadeToggle("fast",function(){
 
@@ -53,6 +53,13 @@ window.onload = function(){
   document.getElementById("import_perform").addEventListener('click',function(){
       var importText = document.getElementById("import_export_text").value
       importPages(importText);
+      refreshOptionsPage();
+      $('#import_export_popup').fadeToggle("fast",function(){
+
+      });
+      $('#screen_disable').fadeToggle("fast",function(){
+
+      });
   });
   //export button
   document.getElementById("export_perform").addEventListener('click',function(){
@@ -98,7 +105,76 @@ window.onload = function(){
   sel.onchange = function(){
     bg.setOptions({"play_sound":sel.value});
   }
+  /*
+  //enable functionality for edit buttons
+  var editButtons = document.getElementsByClassName("opts_edit_button");
+  var editOnClick = function() {
+    var attribute = this.getAttribute("id");
+    var savedPages = bg.getSavedPages();
+    var key = attribute.slice(12,attribute.length);
 
+    $('#edit_popup').fadeToggle("fast",function(){
+      //populate fields with attribute
+
+      $('#edit_id').val(savedPages[key]["key"]);
+      $('#edit_name').val(savedPages[key]["name"]);
+      $('#edit_price').val(savedPages[key]["max_price"]);
+
+    });
+    $('#screen_disable').fadeToggle("fast",function(){
+
+    });
+  };
+  for (var i = 0; i < editButtons.length; i++) {
+    editButtons[i].addEventListener('click', editOnClick, false);
+  }
+  */
+  //save edit
+  document.getElementById("edit_save").addEventListener("click",function(){
+
+    var savedPages = bg.getSavedPages();
+    savedPages[$('#edit_id').val()]["name"] = $('#edit_name').val();
+    savedPages[$('#edit_id').val()]["max_price"] = parseFloat($('#edit_price').val());
+    bg.setSavedPages(savedPages,function(){
+      chrome.storage.local.set({"saved_pages":savedPages});
+    });
+    $('#edit_popup').fadeToggle("fast",function(){
+      refreshOptionsPage();
+      $('#edit_id').val('');
+      $('#edit_name').val('');
+      $('#edit_price').val('');
+    });
+    $('#screen_disable').fadeToggle("fast",function(){
+    });
+  });
+
+  //remove edit
+  document.getElementById("edit_remove").addEventListener("click",function(){
+    bg.removeFromSavedPages($('#edit_id').val(),function(){
+      chrome.storage.local.set({"saved_pages":bg.getSavedPages()});
+    });
+    $('#edit_popup').fadeToggle("fast",function(){
+      refreshOptionsPage();
+      $('#edit_id').val('');
+      $('#edit_name').val('');
+      $('#edit_price').val('');
+    });
+    $('#screen_disable').fadeToggle("fast",function(){
+    });
+  });
+
+
+  //close edit
+  document.getElementById("edit_cancel").addEventListener("click",function(){
+    $('#edit_id').val('');
+    $('#edit_name').val('');
+    $('#edit_price').val('');
+    $('#edit_popup').fadeToggle("fast",function(){
+      refreshOptionsPage();
+    });
+    $('#screen_disable').fadeToggle("fast",function(){
+    });
+  });
   //test email
   /*
   document.getElementById("test_email").addEventListener("click",function(){
@@ -122,13 +198,18 @@ function refreshOptionsPage(){
 
   savedPages = bg.getSavedPages();
   var title = $('#monitored_pages_title');
+  var lastChecked = $('#monitored_pages_last');
+  var monitoredPages = $('#monitored_pages');
+  title.empty();
+  lastChecked.empty();
+  monitoredPages.empty();
+
   if(savedPages === undefined || Object.keys(savedPages).length < 1){
     title.append(getOptsTitle(false));
   }
   else {
     title.append(getOptsTitle(true));
-    var monitoredPages = $('#monitored_pages');
-    //monitoredPages.append('<div class="single_entry_full"><p class="single_entry_ind">Amazon ID</p><div class="divider"></div><p class="single_entry_ind">Name</p><div class="divider"></div><p class="single_entry_ind">Max Price</p><div class="divider"></div><p class="single_entry_ind">Last Refresh</p></div><HR WIDTH="50%" SIZE="3" NOSHADE>')
+    monitoredPages.append('<table id="pages_table"></table>')
     var table = document.getElementById("pages_table");
     //create header
     var header = table.createTHead();
@@ -144,7 +225,7 @@ function refreshOptionsPage(){
     id_cell.innerHTML = 'Amazon ID';
     name_cell.innerHTML = 'Name/Link';
     price_cell.innerHTML = 'Max Price';
-    time_cell.innerHTML = 'Last Checked';
+    time_cell.innerHTML = 'Options';
 
     //sorting array by name instead of amazon id
     var sortable = [];
@@ -153,6 +234,7 @@ function refreshOptionsPage(){
       return a[0].localeCompare(b[0]);
     });
     savedPages = sortable;
+    lastChecked.append('Last Checked: '+savedPages[0][1]["last_refresh"]);
     //console.log(sortable.sort(function(a, b) {return a[0] - b[0]}))
     for (i in savedPages){
       var row = table.insertRow(-1);
@@ -164,9 +246,36 @@ function refreshOptionsPage(){
       id_cell.innerHTML = savedPages[i][1]["key"];
       name_cell.innerHTML = '<a href="'+amzId2Url(savedPages[i][1]["key"])+'">'+savedPages[i][1]["name"]+'</a>';
       price_cell.innerHTML = '$'+savedPages[i][1]["max_price"];
-      time_cell.innerHTML = savedPages[i][1]["last_refresh"];
+      var btn = document.createElement('input');
+      btn.type = "button";
+      btn.className = "opts_edit_button";
+      btn.id = "edit_button_"+savedPages[i][1]["key"];
+      time_cell.appendChild(btn);
+      //time_cell.innerHTML = savedPages[i][1]["last_refresh"];
       //console.log(getOptsEntry(savedPages[i]));
       //monitoredPages.append(getOptsEntry(savedPages[i]));
+    }
+    //enable functionality for edit buttons
+    var editButtons = document.getElementsByClassName("opts_edit_button");
+    var editOnClick = function() {
+      var attribute = this.getAttribute("id");
+      var savedPages = bg.getSavedPages();
+      var key = attribute.slice(12,attribute.length);
+
+      $('#edit_popup').fadeToggle("fast",function(){
+        //populate fields with attribute
+
+        $('#edit_id').val(savedPages[key]["key"]);
+        $('#edit_name').val(savedPages[key]["name"]);
+        $('#edit_price').val(savedPages[key]["max_price"]);
+
+      });
+      $('#screen_disable').fadeToggle("fast",function(){
+
+      });
+    };
+    for (var i = 0; i < editButtons.length; i++) {
+      editButtons[i].addEventListener('click', editOnClick, false);
     }
   }
 }

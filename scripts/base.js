@@ -106,7 +106,6 @@ function processNotify(toNotify, savedPages){
     }
   }
   savedPages = updateTime(savedPages);
-  console.log(savedPages);
   if(!debug){
     chrome.storage.local.set({"saved_pages":savedPages},function(){
     });
@@ -188,10 +187,11 @@ function getTradeIn(response){
 function importPages(response){
   var bg = chrome.extension.getBackgroundPage();
   savedPages = str2Pages(response);
-  bg.setSavedPages(savedPages);
-  chrome.storage.local.set({'saved_pages': savedPages}, function() {
-      // Notify that we saved.
-      alert('Data Successfully Saved');
+  bg.setSavedPages(savedPages,function(){
+    chrome.storage.local.set({'saved_pages': savedPages}, function() {
+        // Notify that we saved.
+        //alert('Data Successfully Saved');
+    });
   });
 }
 

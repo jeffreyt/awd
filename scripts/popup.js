@@ -1,8 +1,35 @@
 var bg = chrome.extension.getBackgroundPage();
-
+var currentID;
+var currentTitle;
 window.onload = function(){
+  //on popup load we get background page, load listings (if they exist),
+  //and determine if a page is an amazon page and can be saved or removed
   var willNotify = bg.getWillNotify();
   loadListings(willNotify);
+  chrome.tabs.query({active: true, lastFocusedWindow: true}, function(array_of_Tabs) {
+    var currentURL = array_of_Tabs[0].url;
+    currentTitle = array_of_Tabs[0].title;
+
+    //if currentURL is amazon keep going
+    if(currentURL.search('amazon')>-1){
+      //if currentURL has amazonID keep going
+      amzID = url2AzId(currentURL);
+
+      if(amzID[0]){
+        currentID = amzID[1];
+        document.getElementById('add_remove').style.display = "initial";
+        //if already in database change html to remove
+        //otherwise add
+        if(bg.idInSavedPages(amzID[1])){
+          document.getElementById('add_remove').innerHTML = "Remove";
+        }
+        else document.getElementById('add_remove').innerHTML = "Add";
+      }
+    }
+    else{
+      document.getElementById('add_remove').style.display = "none";
+    }
+  });
 
   document.getElementById('clear_all').addEventListener('click',function(){
     bg.clearWillNotify();
@@ -45,20 +72,23 @@ window.onload = function(){
       popupWin.document.getElementById("cp_text_area").value = notifyStr;
     }
   });
+
   document.getElementById('add_remove').addEventListener('click',function(){
-    // Do NOT forget that the method is ASYNCHRONOUS
-    chrome.tabs.query({
-      active: true,               // Select active tabs
-      lastFocusedWindow: true     // In the current window
-    }, function(array_of_Tabs) {
-      // Since there can only be one active tab in one active window,
-      //  the array has only one element
-      var tab = array_of_Tabs[0];
-      // Example:
-      url2AzId(tab.url);
-      
-    });
+    //do this to add or remove page from saved_pages
+    window.close();
+    if (document.getElementById('add_remove').innerHTML === 'Remove'){
+      bg.removeFromSavedPages(currentID,function(){
+        chrome.storage.local.set({"saved_pages":bg.getSavedPages()});
+      });
+    }
+    if (document.getElementById('add_remove').innerHTML === 'Add'){
+      bg.add2SavedPages(currentID,currentTitle,MAX_PRICE,function(){
+        chrome.storage.local.set({"saved_pages":bg.getSavedPages()});
+      });
+    }
+
   });
+
 }
 
 function loadListings(willNotify){

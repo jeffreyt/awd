@@ -60,8 +60,33 @@ function getSavedPages(){
 	return savedPages;
 }
 
-function setSavedPages(response){
+function idInSavedPages(amzID){
+	if (amzID in savedPages){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+function add2SavedPages(key,title,price, callback){
+	savedPages[key] = {};
+	savedPages[key]["key"]=key;
+	savedPages[key]["name"] = title;
+	savedPages[key]["max_price"] = price;
+	savedPages[key]["last_refresh"] = "Never";
+	savedPages[key]["old_price"] = MAX_PRICE;
+	callback();
+}
+
+function removeFromSavedPages(key,callback){
+	delete savedPages[key];
+	callback();
+}
+
+function setSavedPages(response,callback){
 	savedPages = response;
+	callback();
 }
 
 function delWillNotify(index){

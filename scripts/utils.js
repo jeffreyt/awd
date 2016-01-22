@@ -139,10 +139,14 @@ function url2AzId(url){
     }
   }
   if (possibleID.length==1){
-    return possibleID[0];
+    return [true,possibleID[0]];
   }
-
-
-
-
+  if (possibleID.length>1){
+    //do greater than 1 stuff
+    return[false,null];
+  }
+  if (possibleID.length<1){
+    //do less than 1 stuff
+    return [false,null];
+  }
 }

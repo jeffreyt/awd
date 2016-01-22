@@ -37,6 +37,7 @@
         <button id="reset_old_prices" title="This will reset all your old prices.  Next time, any price below your maximum value will be shown.">Reset Old Prices</button>
       </div>
       <div id="screen_disable"></div>
+
       <div id="import_export_popup">
         <textarea rows="30" cols="80" id="import_export_text"></textarea>
         <div id="import_export_buttons">
@@ -49,10 +50,36 @@
           <button id="import_export_close">Close</button>
         </div>
       </div>
+
+      <div id="edit_popup">
+        <h2>Edit</h2>
+        <table class="edit_table">
+          <tr class="edit_row">
+            <td class="edit_col_1">ID:</td>
+            <td class="edit_col_2"><input type="text" class="edit_textbox" id="edit_id"></input></td>
+          </tr>
+          <tr class="edit_row">
+            <td class="edit_col_1">Name:</td>
+            <td class="edit_col_2"><input type="text" class="edit_textbox" id="edit_name"></input></td>
+          </tr>
+          <tr class="edit_row">
+            <td class="edit_col_1">Max Price:</td>
+            <td class="edit_col_2"><input type="text" class="edit_textbox" id="edit_price"></input></td>
+          </tr>
+        </table>
+        <div id = "edit_buttons">
+          <button id="edit_save">Save</button>
+          <button id="edit_remove">Remove</button>
+          <button id="edit_cancel">Cancel</button>
+        </div>
+      </div>
+
+
       <br>
       <br>
       <hr>
       <div id="monitored_pages_title"></div>
+      <h3 id="monitored_pages_last"></h3>
       <br>
       <div id="monitored_pages">
         <table id="pages_table"></table>
