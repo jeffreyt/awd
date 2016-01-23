@@ -17,10 +17,24 @@ MONTHS={0:"Jan",
 function pages2Str(pages){
 
     var outStr = "";
+    sorted = [];
     for (var key in pages){
-        outStr = outStr.concat(key + ',\t' + pages[key]["name"] + ',\t' + pages[key]["max_price"] + '\n');
+        sorted.push ([pages[key]["name"],pages[key]["key"],pages[key]["max_price"]]);
+    }
+    sorted.sort(sortFunction);
+    for(var i in sorted){
+      outStr = outStr.concat(sorted[i][1] + ',\t' + sorted[i][0] + ',\t' + sorted[i][2] + '\n');
     }
     return outStr;
+}
+
+function sortFunction(a, b) {
+    if (a[0] === b[0]) {
+        return 0;
+    }
+    else {
+        return (a[0] < b[0]) ? -1 : 1;
+    }
 }
 
 //function converts string of input pages format into a dictionary

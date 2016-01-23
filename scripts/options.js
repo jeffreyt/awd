@@ -105,42 +105,19 @@ window.onload = function(){
   sel.onchange = function(){
     bg.setOptions({"play_sound":sel.value});
   }
-  /*
-  //enable functionality for edit buttons
-  var editButtons = document.getElementsByClassName("opts_edit_button");
-  var editOnClick = function() {
-    var attribute = this.getAttribute("id");
-    var savedPages = bg.getSavedPages();
-    var key = attribute.slice(12,attribute.length);
 
-    $('#edit_popup').fadeToggle("fast",function(){
-      //populate fields with attribute
-
-      $('#edit_id').val(savedPages[key]["key"]);
-      $('#edit_name').val(savedPages[key]["name"]);
-      $('#edit_price').val(savedPages[key]["max_price"]);
-
-    });
-    $('#screen_disable').fadeToggle("fast",function(){
-
-    });
-  };
-  for (var i = 0; i < editButtons.length; i++) {
-    editButtons[i].addEventListener('click', editOnClick, false);
-  }
-  */
   //save edit
   document.getElementById("edit_save").addEventListener("click",function(){
 
     var savedPages = bg.getSavedPages();
-    savedPages[$('#edit_id').val()]["name"] = $('#edit_name').val();
-    savedPages[$('#edit_id').val()]["max_price"] = parseFloat($('#edit_price').val());
+    savedPages[$('#edit_id').html()]["name"] = $('#edit_name').val();
+    savedPages[$('#edit_id').html()]["max_price"] = parseFloat($('#edit_price').val());
     bg.setSavedPages(savedPages,function(){
       chrome.storage.local.set({"saved_pages":savedPages});
     });
     $('#edit_popup').fadeToggle("fast",function(){
       refreshOptionsPage();
-      $('#edit_id').val('');
+      $('#edit_id').html('');
       $('#edit_name').val('');
       $('#edit_price').val('');
     });
@@ -150,12 +127,12 @@ window.onload = function(){
 
   //remove edit
   document.getElementById("edit_remove").addEventListener("click",function(){
-    bg.removeFromSavedPages($('#edit_id').val(),function(){
+    bg.removeFromSavedPages($('#edit_id').html(),function(){
       chrome.storage.local.set({"saved_pages":bg.getSavedPages()});
     });
     $('#edit_popup').fadeToggle("fast",function(){
       refreshOptionsPage();
-      $('#edit_id').val('');
+      $('#edit_id').html('');
       $('#edit_name').val('');
       $('#edit_price').val('');
     });
@@ -163,10 +140,9 @@ window.onload = function(){
     });
   });
 
-
   //close edit
   document.getElementById("edit_cancel").addEventListener("click",function(){
-    $('#edit_id').val('');
+    $('#edit_id').html('');
     $('#edit_name').val('');
     $('#edit_price').val('');
     $('#edit_popup').fadeToggle("fast",function(){
@@ -205,10 +181,10 @@ function refreshOptionsPage(){
   monitoredPages.empty();
 
   if(savedPages === undefined || Object.keys(savedPages).length < 1){
-    title.append(getOptsTitle(false));
+    title.append(getOptsTitle(false,0));
   }
   else {
-    title.append(getOptsTitle(true));
+    title.append(getOptsTitle(true,Object.keys(savedPages).length));
     monitoredPages.append('<table id="pages_table"></table>')
     var table = document.getElementById("pages_table");
     //create header
@@ -250,7 +226,9 @@ function refreshOptionsPage(){
       btn.type = "button";
       btn.className = "opts_edit_button";
       btn.id = "edit_button_"+savedPages[i][1]["key"];
+      btn.value = "Edit";
       time_cell.appendChild(btn);
+
       //time_cell.innerHTML = savedPages[i][1]["last_refresh"];
       //console.log(getOptsEntry(savedPages[i]));
       //monitoredPages.append(getOptsEntry(savedPages[i]));
@@ -265,7 +243,7 @@ function refreshOptionsPage(){
       $('#edit_popup').fadeToggle("fast",function(){
         //populate fields with attribute
 
-        $('#edit_id').val(savedPages[key]["key"]);
+        $('#edit_id').html(savedPages[key]["key"]);
         $('#edit_name').val(savedPages[key]["name"]);
         $('#edit_price').val(savedPages[key]["max_price"]);
 

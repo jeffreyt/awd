@@ -4,6 +4,8 @@
 var willNotify = [];
 var bgOptions;
 var savedPages;
+var robotCheck=false;
+
 //***********************On startup******************************//
 
 chrome.storage.local.get("options",function(response){
@@ -129,4 +131,12 @@ function refreshPages(){
 			}
 		});
 	});
+}
+
+function getRobotCheck(){
+	return robotCheck;
+}
+
+function setRobotCheck(robot){
+	robotCheck = robot;
 }

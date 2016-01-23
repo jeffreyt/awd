@@ -20,27 +20,30 @@ function processPages(savedPages){
   for (i in savedPages){
     (function(key){
       var urlStr = amzId2Url(key);
-      getData(urlStr,function(err,data){
-        //console.log(data);
-        count--;
-        if (count>-1){
-          tempPages = processHTML(data,key,savedPages);
-          if (tempPages[0]){
-            toNotify.push(tempPages[1]);
-            //console.log(processHTML(data,key,savedPages));
-            if (count < 1){
-              //processNotify will be called after all pages are retrieved
-              processNotify(toNotify,savedPages);
-              //console.log(toNotify);
+      if(!getRobotCheck()){
+        getData(urlStr,function(err,data){
+          //console.log(data);
+          count--;
+          if (count>-1){
+            tempPages = processHTML(data,key,savedPages);
+            if (tempPages[0]){
+              toNotify.push(tempPages[1]);
+              //console.log(processHTML(data,key,savedPages));
+              if (count < 1){
+                //processNotify will be called after all pages are retrieved
+                processNotify(toNotify,savedPages);
+                //console.log(toNotify);
+              }
+            }
+            else{
+              //robot check went off kill everything
+              console.log(key);
+              killAllAlert(amzId2Url(key));
+              count=-1;
             }
           }
-          else{
-            //robot check went off kill everything
-            killAllAlert(tempPages);
-            count=-1;
-          }
-        }
-      });
+        });
+      }
     })(i);
     //notice = processHTML(htmlStr);
   }
@@ -58,7 +61,7 @@ function processHTML(htmlStr,key,savedPages){
   returnOffers = getOffers(htmlStr);
   if (returnOffers[0]<0){
     //robot check went off, return false
-    return [false,htmlStr];
+    return [false,amzId2Url(key)];
   }
   var name = savedPages[key]['name'];
   var maxPrice = savedPages[key]['max_price'];
@@ -133,6 +136,7 @@ function getOffers(response){
     if(bot > -1){
       //robot check went off.  kill everything
       return [-1,null];
+      setRobotCheck(true);
     }
 
     var el = document.createElement( 'html' );
@@ -198,7 +202,7 @@ function importPages(response){
 function exportPages(){
   var varName = 'saved_pages';
   chrome.storage.local.get(varName,function(result){
-      document.getElementById("import_export_text").value = pages2Str(result.saved_pages);
+    document.getElementById("import_export_text").value = pages2Str(result.saved_pages);
   });
 }
 
@@ -271,16 +275,13 @@ chrome.notifications.onButtonClicked.addListener(function(notifId, btnIdx) {
 
 
 
-
-
-
 function killAllAlert(tempPages){
   chrome.alarms.clear("time_alarm");
   var opt = {type: "basic",title: 'ROBOT CHECK' ,message: 'Robot check went off.  Checking has been suspended until you manually refresh.  Please solve the captcha then refresh.',iconUrl: "imgs/icon.png"}
   chrome.notifications.create("notificationName",opt,function(){
-    var popupWin = PopupCenter(tempPages[1], 'cp_window', 600, 600);
+    var popupWin = PopupCenter(tempPages, 'cp_window', 600, 600);
   });
-  chrome.notifications.onClicked.addListener(function(tempPages){
-    chrome.tabs.create({ url: tempPages[1] });
+  chrome.notifications.onClicked.addListener(function(){
+    chrome.tabs.create({ url: tempPages });
   })
 }

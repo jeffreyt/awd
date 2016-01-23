@@ -47,8 +47,10 @@ window.onload = function(){
     window.close();
   });
   document.getElementById('refresh_all').addEventListener('click',function(){
-    bg.refreshPages();
     window.close();
+    bg.refreshPages();
+    bg.setRobotCheck(false);
+
   })
   document.getElementById('options').addEventListener('click',function(){
     var optionsUrl = chrome.extension.getURL('options.htm');
