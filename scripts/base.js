@@ -16,6 +16,8 @@ debug = false;
 
 function processPages(savedPages){
   var toNotify = [];
+  if (typeof savedPages === "undefined") savedPages = {};
+
   var count = Object.keys(savedPages).length;
   for (i in savedPages){
     (function(key){

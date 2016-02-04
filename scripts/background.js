@@ -3,9 +3,23 @@
 
 var willNotify = [];
 var bgOptions;
-var savedPages;
+var savedPages={};
 var robotCheck=false;
 
+
+//console.log("label: " + GmailApp.createLabel("FOO"));
+
+//test email
+
+
+/*
+function sendTestEmail(){
+	var mailText = constructEmail("mike","TM Email","angel.romeo98@gmail.com","mike.tamashiro@gmail.com","hello","this is a pretty quick test");
+	console.log(mailText);
+	//testMail();
+	sendEmail("me", mailText);
+}
+*/
 //***********************On startup******************************//
 
 chrome.storage.local.get("options",function(response){
@@ -16,7 +30,6 @@ chrome.storage.local.get("options",function(response){
 	else bgOptions = response.options;
 });
 
-
 chrome.storage.local.get("interval_time",function(result){
 	//set alarm
 	createAlarm("time_alarm",result.interval_time);
@@ -24,9 +37,15 @@ chrome.storage.local.get("interval_time",function(result){
 
 chrome.alarms.onAlarm.addListener(function( alarm ) {
 	chrome.storage.local.get("saved_pages",function(result){
-		processPages(result.saved_pages);
-		savedPages = result.saved_pages;
+		if (typeof result.saved_pages === "undefined"){
+			savedPages = {}
+		}
+		else{
+			processPages(result.saved_pages);
+			savedPages = result.saved_pages;
+		}
 	});
+
 });
 
 //*************************************************************//

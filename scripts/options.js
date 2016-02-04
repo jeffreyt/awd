@@ -66,6 +66,12 @@ window.onload = function(){
       document.getElementById("import_export_text").value = "";
       exportPages();
   });
+  //time box
+
+  document.getElementById("check_time").addEventListener("keyup",function(){
+    document.getElementById("check_time_slider").value = document.getElementById("check_time").value;
+  })
+
   //save slider
   document.getElementById("check_time_slider").addEventListener("change",function(){
       document.getElementById("check_time").value = document.getElementById("check_time_slider").value;
@@ -152,11 +158,11 @@ window.onload = function(){
     });
   });
   //test email
-  /*
-  document.getElementById("test_email").addEventListener("click",function(){
 
+  document.getElementById("test_email").addEventListener("click",function(){
+    bg.sendTestEmail();
   });
-  */
+
 }
 
 function refreshOptionsPage(){
@@ -167,8 +173,6 @@ function refreshOptionsPage(){
   if (typeof bgOptions === "undefined"){
     bgOptions = {};
     bgOptions["play_sound"]=0;
-    console.log(bgOptions);
-
   }
   document.getElementById("alert_sound").value = bgOptions["play_sound"];
 
@@ -194,12 +198,14 @@ function refreshOptionsPage(){
     row.style.fontSize="20px";
     var id_cell = row.insertCell(0);
     var name_cell = row.insertCell(1);
-    var price_cell = row.insertCell(2);
-    var time_cell = row.insertCell(3);
+    var curr_cell = row.insertCell(2);
+    var price_cell = row.insertCell(3);
+    var time_cell = row.insertCell(4);
 
     //id_cell.style.fontWeight="bold";
     id_cell.innerHTML = 'Amazon ID';
     name_cell.innerHTML = 'Name/Link';
+    curr_cell.innerHTML = 'Current Price';
     price_cell.innerHTML = 'Max Price';
     time_cell.innerHTML = 'Options';
 
@@ -216,11 +222,19 @@ function refreshOptionsPage(){
       var row = table.insertRow(-1);
       var id_cell = row.insertCell(0);
       var name_cell = row.insertCell(1);
-      var price_cell = row.insertCell(2);
-      var time_cell = row.insertCell(3);
+      var curr_cell = row.insertCell(2);
+      var price_cell = row.insertCell(3);
+      var time_cell = row.insertCell(4);
 
       id_cell.innerHTML = savedPages[i][1]["key"];
-      name_cell.innerHTML = '<a href="'+amzId2Url(savedPages[i][1]["key"])+'">'+savedPages[i][1]["name"]+'</a>';
+      name_cell.innerHTML = '<a target="_blank" href="'+amzId2Url(savedPages[i][1]["key"])+'">'+savedPages[i][1]["name"]+'</a>';
+      if (savedPages[i][1]["old_price"]>MAX_PRICE-1){
+        currPrice = 'N/A';
+      }
+      else{
+        currPrice = '$'+savedPages[i][1]["old_price"];
+      }
+      curr_cell.innerHTML = currPrice;
       price_cell.innerHTML = '$'+savedPages[i][1]["max_price"];
       var btn = document.createElement('input');
       btn.type = "button";
