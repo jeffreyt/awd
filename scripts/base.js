@@ -191,12 +191,13 @@ function getTradeIn(response){
 //output:
 
 function importPages(response){
+  console.log('got here');
   var bg = chrome.extension.getBackgroundPage();
   savedPages = str2Pages(response);
   bg.setSavedPages(savedPages,function(){
     chrome.storage.local.set({'saved_pages': savedPages}, function() {
         // Notify that we saved.
-        //alert('Data Successfully Saved');
+        alert('Data Successfully Saved');
     });
   });
 }
@@ -246,7 +247,10 @@ function fireNotification(willNotify){
 
   chrome.notifications.create("notificationName",opt,function(){
     var bg = chrome.extension.getBackgroundPage();
-    bgOptions = bg.getOptions();
+    var bgOptions = bg.getOptions();
+    if (typeof bgOptions === "undefined"){
+      bgOptions = {"play_sound":0};
+    }
     if (bgOptions["play_sound"]==1){
       var audio = new Audio('audio/cuckoo.ogg');
       audio.play();

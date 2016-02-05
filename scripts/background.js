@@ -2,8 +2,8 @@
 
 
 var willNotify = [];
-var bgOptions;
-var savedPages={};
+var bgOptions = {"play_sound":0};
+var savedPages;
 var robotCheck=false;
 
 
@@ -34,6 +34,18 @@ chrome.storage.local.get("interval_time",function(result){
 	//set alarm
 	createAlarm("time_alarm",result.interval_time);
 });
+
+chrome.storage.local.get("saved_pages",function(result){
+	if (typeof result.saved_pages === "undefined"){
+		savedPages = {}
+	}
+	else{
+		savedPages = result.saved_pages;
+	}
+});
+
+
+//On alarm
 
 chrome.alarms.onAlarm.addListener(function( alarm ) {
 	chrome.storage.local.get("saved_pages",function(result){

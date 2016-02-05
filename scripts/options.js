@@ -158,10 +158,11 @@ window.onload = function(){
     });
   });
   //test email
-
+  /*
   document.getElementById("test_email").addEventListener("click",function(){
     bg.sendTestEmail();
   });
+  */
 
 }
 
