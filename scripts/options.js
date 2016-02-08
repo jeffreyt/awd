@@ -9,7 +9,7 @@ window.onload = function(){
   console.log(opts);
   */
   //loading saved options
-
+  console.log(document.getElementById("version_num"));
   var manifest = chrome.runtime.getManifest();
   document.getElementById("version_num").innerHTML='ver '+manifest.version;
   //console.log(manifest.name);
