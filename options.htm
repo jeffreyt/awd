@@ -7,11 +7,12 @@
     <script type="text/javascript" src="scripts/textFunctions.js"></script>
     <script type="text/javascript" src="scripts/base.js"></script>
     <script type="text/javascript" src="scripts/options.js"></script>
-
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Cinzel:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="styles/options.css">
   </head>
-  <body>
-    <p style="text-align: center">
+  <body style="background-color: #FBFBF2">
+    <p>
       <br>
     </p>
     <div id = "main_options">
@@ -19,16 +20,17 @@
       <h3 id="version_num"></h3>
       <br>
       <div class="opts_first_line">
-        <span>Sound</span>
+        <span>Sound &nbsp;   </span>
         <select id="alert_sound">
           <option value=0>None</option>
           <option value=1>Cuckoo</option>
           <option value=2>Bell</option>
         </select>
-        <div class="divider"></div>
-        <input id="check_time"><input id = "check_time_slider" type="range" min="0.02" max="60" value="0" step="1" />mins
-        <div class="divider"></div>
-        <button id="save_options">Save Time</button>
+        <br>
+        <input id="check_time">&nbsp;   minute(s) <br> 
+        <input id = "check_time_slider" type="range" min="0.02" max="60" value="0" step="1" /> 
+        <br><br>
+        <button id="save_options">Set Timer</button>
         <!--<button id="test_email">Test Email</button>-->
       </div>
       <br>
@@ -68,6 +70,16 @@
             <td class="edit_col_2"><input type="text" class="edit_textbox" id="edit_price"></input></td>
           </tr>
         </table>
+        <div class="code">
+        <style style="display: none;">
+        hr.style-one {
+          border: 0;
+          height: 1px;
+          background: #333;
+          background-image: linear-gradient(to right, #ccc, #333, #ccc);
+        }
+        </style>
+      </div>
         <div id = "edit_buttons">
           <button id="edit_save">Save</button>
           <button id="edit_remove">Remove</button>
