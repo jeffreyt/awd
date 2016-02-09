@@ -103,14 +103,14 @@ window.onload = function(){
     //createAlarm("time_alarm",intervalTime);
     //possible more variables here
     //save options
-
+    console.log(intervalTime);
     chrome.storage.local.set({"interval_time":intervalTime},function(){
       alert('New interval time has been saved.')
       document.getElementById("check_time_slider").value = intervalTime;
-      setTimeout(function(){
-        chrome.alarms.set("time_alarm",intervalTime);
-      },intervalTime*MINS2MS);
-     })
+      chrome.alarms.create("time_alarm",{
+        delayInMinutes: 1.0, periodInMinutes: intervalTime
+      });
+    });
 
   });
   //reset old prices
