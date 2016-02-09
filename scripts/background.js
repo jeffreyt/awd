@@ -32,7 +32,13 @@ chrome.storage.local.get("options",function(response){
 
 chrome.storage.local.get("interval_time",function(result){
 	//set alarm
-	createAlarm("time_alarm",result.interval_time);
+	if (typeof result.interval_time === "undefined"){
+		createAlarm("time_alarm",DEFAULT_CHECKTIME);
+	}
+	else{
+		createAlarm("time_alarm",result.interval_time);
+	}
+
 });
 
 chrome.storage.local.get("saved_pages",function(result){
