@@ -54,16 +54,18 @@ chrome.storage.local.get("saved_pages",function(result){
 //On alarm
 
 chrome.alarms.onAlarm.addListener(function( alarm ) {
-	chrome.storage.local.get("saved_pages",function(result){
-		if (typeof result.saved_pages === "undefined"){
-			savedPages = {}
-		}
-		else{
-			processPages(result.saved_pages);
-			savedPages = result.saved_pages;
-		}
-	});
+	if (alarm.name == "time_alarm"){
 
+		chrome.storage.local.get("saved_pages",function(result){
+			if (typeof result.saved_pages === "undefined"){
+				savedPages = {}
+			}
+			else{
+				processPages(result.saved_pages);
+				savedPages = result.saved_pages;
+			}
+		});
+	}
 });
 
 //*************************************************************//
@@ -176,4 +178,8 @@ function getRobotCheck(){
 
 function setRobotCheck(robot){
 	robotCheck = robot;
+}
+
+function printTest(){
+	console.log('test');
 }

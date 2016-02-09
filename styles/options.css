@@ -4,13 +4,13 @@
   div {}
 
   h1 {
-      font-family: 'Cinzel', serif; 
+      font-family: 'Cinzel', serif;
       font-weight:400;
       font-size: 32px;
   }
 
   h2 {
-    font-family: 'Roboto Condensed'; 
+    font-family: 'Roboto Condensed';
     font-weight:400;
     text-align: center;
   }
@@ -172,7 +172,7 @@ a:visited{
   }
 
   .opts_edit_button {
-   
+
   background-color:#A6A2A2;
   -moz-border-radius:2px;
   -webkit-border-radius:2px;

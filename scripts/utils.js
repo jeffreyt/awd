@@ -23,7 +23,7 @@ function pages2Str(pages){
     }
     sorted.sort(sortFunction);
     for(var i in sorted){
-      outStr = outStr.concat(sorted[i][1] + ',\t' + sorted[i][0] + ',\t' + sorted[i][2] + '\n');
+      outStr = outStr.concat(sorted[i][1] + ', ' + sorted[i][0] + ', ' + sorted[i][2] + '\n');
     }
     return outStr;
 }

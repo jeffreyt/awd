@@ -1,7 +1,22 @@
 
 var bg = chrome.extension.getBackgroundPage();
 
+
+
+chrome.alarms.onAlarm.addListener(function(alarm) {
+  refreshOptionsPage();
+});
+
+window.onbeforeunload = function () {
+    chrome.alarms.clear("opts_refresh");
+}
+
+
 window.onload = function(){
+
+  chrome.alarms.create("opts_refresh", {
+    delayInMinutes: 0.0, periodInMinutes: 0.08
+  });
   //get options
   /*
   var bg = chrome.extension.getBackgroundPage();
@@ -9,7 +24,6 @@ window.onload = function(){
   console.log(opts);
   */
   //loading saved options
-  console.log(document.getElementById("version_num"));
   var manifest = chrome.runtime.getManifest();
   document.getElementById("version_num").innerHTML='ver '+manifest.version;
   //console.log(manifest.name);
@@ -30,6 +44,10 @@ window.onload = function(){
       document.getElementById("check_time_slider").value = result.interval_time;
     }
   });
+
+  document.getElementById("refresh_button").addEventListener('click',function(){
+    bg.refreshPages();
+  })
 
   document.getElementById("import_export_button").addEventListener('click',function(){
     $('#import_export_popup').fadeToggle("fast",function(){
@@ -271,4 +289,9 @@ function refreshOptionsPage(){
       editButtons[i].addEventListener('click', editOnClick, false);
     }
   }
+
+
+
+
+
 }

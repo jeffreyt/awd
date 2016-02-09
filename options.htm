@@ -27,8 +27,8 @@
           <option value=2>Bell</option>
         </select>
         <br>
-        <input id="check_time">&nbsp;   minute(s) <br> 
-        <input id = "check_time_slider" type="range" min="0.02" max="60" value="0" step="1" /> 
+        <input id="check_time">&nbsp;   minute(s) <br>
+        <input id = "check_time_slider" type="range" min="0.02" max="60" value="0" step="1" />
         <br><br>
         <button id="save_options">Set Timer</button>
         <!--<button id="test_email">Test Email</button>-->
@@ -36,13 +36,14 @@
       <br>
       <br>
       <div class="opts_second_line">
+        <button id ="refresh_button">Refresh</button>
         <button id ="import_export_button">Import/Export</button>
         <button id="reset_old_prices" title="This will reset all your old prices.  Next time, any price below your maximum value will be shown.">Reset Old Prices</button>
       </div>
       <div id="screen_disable"></div>
 
       <div id="import_export_popup">
-        <textarea rows="30" cols="80" id="import_export_text"></textarea>
+        <textarea rows="30" cols="100" id="import_export_text"></textarea>
         <div id="import_export_buttons">
           <button id="import_perform">
             <span class title>Import</span>

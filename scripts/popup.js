@@ -104,7 +104,7 @@ function loadListings(willNotify){
     //console.log(willNotify[i]);
     main.append('<div><a href="' +willNotify[i][1]+ '" target="_blank" class = "popup_link" id="ln'+i+'">' +willNotify[i][0]+ '</a> - '+willNotify[i][2][0][0]+' '+willNotify[i][2][0][1]+'</div>');
     //main.append('<div><a href="' +willNotify[i][1]+ '" class = "popup_link" id="ln'+i+'">' +willNotify[i][0]+ '</a> - '+willNotify[i][2][0][0]+' '+willNotify[i][2][0][1]+'</div>');
-    main.append('<br><hr>');
+    main.append('<hr>');
   }
   var elements = document.getElementsByClassName('popup_link');
   //console.log(elements.length);

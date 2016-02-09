@@ -17,8 +17,8 @@ debug = false;
 function processPages(savedPages){
   var toNotify = [];
   if (typeof savedPages === "undefined") savedPages = {};
-
   var count = Object.keys(savedPages).length;
+
   for (i in savedPages){
     (function(key){
       var urlStr = amzId2Url(key);
@@ -47,15 +47,13 @@ function processPages(savedPages){
         });
       }
     })(i);
-    //notice = processHTML(htmlStr);
   }
-  //async function used to get webpage html string
-  function getData(url,callback){
-    $.get(url,function(result){
-      //console.log(result);
-      callback(null,result)
-    });
-  };
+}
+
+function getData(url,callback){
+  $.get(url,function(result){
+    callback(null,result);
+  });
 }
 
 function processHTML(htmlStr,key,savedPages){
@@ -91,6 +89,7 @@ function processHTML(htmlStr,key,savedPages){
 
 function processNotify(toNotify, savedPages){
   //step through
+
   var willNotify = [];
   for(i=0;i<toNotify.length;i++){
     //modify savedPages
@@ -278,8 +277,6 @@ chrome.notifications.onButtonClicked.addListener(function(notifId, btnIdx) {
     chrome.notifications.clear("notificationName");
   }
 });
-
-
 
 function killAllAlert(tempPages){
   chrome.alarms.clear("time_alarm");
