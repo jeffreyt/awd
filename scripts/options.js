@@ -198,9 +198,11 @@ function refreshOptionsPage(){
   savedPages = bg.getSavedPages();
   var title = $('#monitored_pages_title');
   var lastChecked = $('#monitored_pages_last');
+  //var nextCheck = $('#monitored_pages_next');
   var monitoredPages = $('#monitored_pages');
   title.empty();
   lastChecked.empty();
+  //nextCheck.empty();
   monitoredPages.empty();
 
   if(savedPages === undefined || Object.keys(savedPages).length < 1){
@@ -236,6 +238,13 @@ function refreshOptionsPage(){
     });
     savedPages = sortable;
     lastChecked.append('Last Checked: '+savedPages[0][1]["last_refresh"]);
+
+
+
+    //nextCheck.append('Next Check: '+'sometime')
+
+
+
     //console.log(sortable.sort(function(a, b) {return a[0] - b[0]}))
     for (i in savedPages){
       var row = table.insertRow(-1);
@@ -289,9 +298,4 @@ function refreshOptionsPage(){
       editButtons[i].addEventListener('click', editOnClick, false);
     }
   }
-
-
-
-
-
 }

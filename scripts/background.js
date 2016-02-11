@@ -6,6 +6,7 @@ var bgOptions = {"play_sound":0};
 var savedPages;
 var robotCheck=false;
 var online;
+var nextCheck;
 
 //console.log("label: " + GmailApp.createLabel("FOO"));
 
@@ -50,12 +51,10 @@ chrome.storage.local.get("saved_pages",function(result){
 	}
 });
 
-
 //On alarm
 
 chrome.alarms.onAlarm.addListener(function( alarm ) {
 	if (alarm.name == "time_alarm"){
-
 		chrome.storage.local.get("saved_pages",function(result){
 			if (typeof result.saved_pages === "undefined"){
 				savedPages = {}
@@ -160,6 +159,7 @@ function updateBadge(num){
 
 function refreshPages(){
 	chrome.storage.local.get("saved_pages",function(result){
+		online = navigator.online;
 		if (online) processPages(result.saved_pages);
 		savedPages = result.saved_pages;
 		//make sure chrome alarm exists.  if not create one
