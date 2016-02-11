@@ -24,7 +24,6 @@ function processPages(savedPages){
       var urlStr = amzId2Url(key);
       if(!getRobotCheck()){
         getData(urlStr,function(err,data){
-          //console.log(data);
           count--;
           if (count>-1){
             tempPages = processHTML(data,key,savedPages);
@@ -51,7 +50,7 @@ function processPages(savedPages){
 }
 
 function getData(url,callback){
-  $.get(url,function(result){
+  $.get(url,function(err,result){
     callback(null,result);
   });
 }
@@ -157,6 +156,13 @@ function getOffers(response){
          condition = condition.replace("Very Good","(VG)");
          condition = condition.replace("Good","(G)");
          condition = condition.replace("Like New","(LN)");
+         try {
+           var description = offers[j].getElementsByClassName(DESCRIPTION_NAME)[0].innerText.replace(/\r?\n|\r/g, '').trim().replace(/\s+/g, ' ');
+
+         }
+         catch(err) {
+           var description = 'no description';
+         }
          var description = offers[j].getElementsByClassName(DESCRIPTION_NAME)[0].innerText.replace(/\r?\n|\r/g, '').trim().replace(/\s+/g, ' ');
 	       if (description.indexOf('\u00AB') > -1) {description = description.substring(0,description.indexOf('\u00AB'));}
 	       indArr.push(price);

@@ -5,7 +5,7 @@ var willNotify = [];
 var bgOptions = {"play_sound":0};
 var savedPages;
 var robotCheck=false;
-
+var online;
 
 //console.log("label: " + GmailApp.createLabel("FOO"));
 
@@ -61,7 +61,8 @@ chrome.alarms.onAlarm.addListener(function( alarm ) {
 				savedPages = {}
 			}
 			else{
-				processPages(result.saved_pages);
+				online = navigator.onLine;
+				if (online) processPages(result.saved_pages);
 				savedPages = result.saved_pages;
 			}
 		});
@@ -159,7 +160,7 @@ function updateBadge(num){
 
 function refreshPages(){
 	chrome.storage.local.get("saved_pages",function(result){
-		processPages(result.saved_pages);
+		if (online) processPages(result.saved_pages);
 		savedPages = result.saved_pages;
 		//make sure chrome alarm exists.  if not create one
 		chrome.alarms.get("time_alarm",function(response){
