@@ -159,12 +159,12 @@ function getOffers(response){
          condition = condition.replace("Like New","(LN)");
          try {
            var description = offers[j].getElementsByClassName(DESCRIPTION_NAME)[0].innerText.replace(/\r?\n|\r/g, '').trim().replace(/\s+/g, ' ');
+
          }
          catch(err) {
            var description = 'no description';
          }
-         //var description = offers[j].getElementsByClassName(DESCRIPTION_NAME)[0].innerText.replace(/\r?\n|\r/g, '').trim().replace(/\s+/g, ' ');
-	       if (description.indexOf('\u00AB') > -1) {description = description.substring(0,description.indexOf('\u00AB'));}
+         if (description.indexOf('\u00AB') > -1) {description = description.substring(0,description.indexOf('\u00AB'));}
 	       indArr.push(price);
 	       indArr.push(condition);
 	       indArr.push(description);
