@@ -159,7 +159,7 @@ function updateBadge(num){
 
 function refreshPages(){
 	chrome.storage.local.get("saved_pages",function(result){
-		online = navigator.online;
+		online = navigator.onLine;
 		if (online) processPages(result.saved_pages);
 		savedPages = result.saved_pages;
 		//make sure chrome alarm exists.  if not create one

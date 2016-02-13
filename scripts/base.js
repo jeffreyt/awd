@@ -242,7 +242,7 @@ function fireNotification(willNotify){
         iconUrl: "imgs/icon.png"
     },
     {
-        title: "Dismiss",
+        title: "Copy/Paste",
         iconUrl: "imgs/icon.png"
     }], iconUrl: "imgs/icon.png"
   }
@@ -271,6 +271,10 @@ function fireNotification(willNotify){
   updateBadge(willNotify.length);
 }
 
+chrome.notifications.onClicked.addListener(function(){
+  chrome.notifications.clear("notificationName");
+});
+
 chrome.notifications.onButtonClicked.addListener(function(notifId, btnIdx) {
   if (btnIdx === 0) {
     for(i=0;i<willNotify.length;i++){
@@ -280,6 +284,13 @@ chrome.notifications.onButtonClicked.addListener(function(notifId, btnIdx) {
     clearWillNotify();
     chrome.notifications.clear("notificationName");
   } else if (btnIdx === 1) {
+    if (!popupWin){
+      var popupWin = PopupCenter('cppopup.htm', 'cp_window', 600, 600);
+      popupWin.document.write('');
+      popupWin.document.write('<h1 style="text-align:center">Copy/Paste</h1><br><textarea id="cp_text_area" rows="35" cols="80"></textarea>');
+      var notifyStr = notify2CPText(getWillNotify());
+      popupWin.document.getElementById("cp_text_area").value = notifyStr;
+    }
     chrome.notifications.clear("notificationName");
   }
 });

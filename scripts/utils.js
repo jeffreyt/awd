@@ -124,7 +124,6 @@ function notify2CPText(willNotify){
     }
     notifyStr = notifyStr.concat('\n\n');
   }
-  console.log(notifyStr);
   return notifyStr;
 }
 
