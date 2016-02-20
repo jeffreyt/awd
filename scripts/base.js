@@ -196,7 +196,6 @@ function getTradeIn(response){
 //output:
 
 function importPages(response){
-  console.log('got here');
   var bg = chrome.extension.getBackgroundPage();
   savedPages = str2Pages(response);
   bg.setSavedPages(savedPages,function(){

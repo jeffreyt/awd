@@ -2,7 +2,7 @@
 var bg = chrome.extension.getBackgroundPage();
 
 
-
+/*
 chrome.alarms.onAlarm.addListener(function(alarm) {
   refreshOptionsPage();
 });
@@ -11,12 +11,16 @@ window.onbeforeunload = function () {
     chrome.alarms.clear("opts_refresh");
 }
 
+chrome.alarms.create("opts_refresh", {
+  delayInMinutes: 0.0, periodInMinutes: 0.08
+});
+*/
+setInterval(function(){
+  refreshOptionsPage();
+}, 3000);
 
 window.onload = function(){
 
-  chrome.alarms.create("opts_refresh", {
-    delayInMinutes: 0.0, periodInMinutes: 0.08
-  });
   //get options
   /*
   var bg = chrome.extension.getBackgroundPage();
