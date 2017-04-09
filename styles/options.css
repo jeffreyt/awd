@@ -1,41 +1,55 @@
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
   html, body{font-family: 'Roboto Condensed', sans-serif;
     font-weight:200;}
   div {}
 
   h1 {
-      font-family: 'Cinzel', serif;
+      font-family: 'Open Sans', sans-serif;
+      text-transform: uppercase;;
       font-weight:400;
       font-size: 32px;
+      color:#3E3E3B;
   }
 
   h2 {
     font-family: 'Roboto Condensed';
     font-weight:400;
+    color:#3E3E3B;
     text-align: center;
   }
 
   h3 {
     font-family: 'Roboto Condensed';
     text-align: center;
+    color:#3E3E3B;
   }
 
 p{
-  font-family: 'Roboto Condensed';
-  color:#C1CAD6;
+  font-family: 'Lato';
+  font-weight:700;
+  color:#3E3E3B;
 }
 
 a:link{
-  color:#6D6163;
+  color:#6D6163; /*color:#6D6163 original color*/
 }
 
 a:visited{
-  color:#A6A2A2;
+  color:#A6A2A2; /*  color:#A6A2A2 original color */
 }
-  input {}
+  input {
+    font-family: 'Lato';
+    font-weight:400;
+  }
 
   #version_num{
     text-align: center;
+  }
+
+  #body{
+    font:Lato;
+    font-weight:100;
+    color:#3E3E3B;
   }
 
   .divider{
@@ -43,23 +57,36 @@ a:visited{
       height:auto;
       display:inline-block;
   }
+  #alert_sound{
+    width:auto;
+    height:auto;
+    font-weight:100;
+    margin-bottom:1.5%;
+    text-align:center;
+    font-size:22;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+  }
 
   #check_time{
-    width:60px;
+    font-weight: 100;
+    width:5%;
     height:auto;
     padding:auto;
     text-align:center;
-    font-size:24;
+    font-size:22;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
   }
 
   #check_time_slider{
     height:8px;
-    width:100px;
+    width:20%;
   }
 
   .opts_first_line{
     vertical-align: middle;
-    font-family:'Roboto Condensed';
+    font-family:'Lato';
     font-size:24px;
     width:100%;
     text-align: center;
@@ -91,7 +118,7 @@ a:visited{
     top: 20%;
     height: 60%;
     width: 50%;
-    background-color:#C1CAD6;
+    background-color:#C1CAD6; /*background-color:#C1CAD6 Original */
     margin-left: -0px;
     margin-top: -0px;
     padding:5px;
@@ -105,7 +132,7 @@ a:visited{
   #edit_popup{
 
     position:fixed;
-    background-color:#C1CAD6;
+    background-color:#C1CAD6; /*background-color:#C1CAD6 Original */
     left:25%;
     top: 35%;
     height: 220px;
@@ -133,26 +160,54 @@ a:visited{
     width:100%;
     height: 100%;
   }
-
-  #edit_buttons{
-      position:absolute;
-      bottom:3;
-      right:3;
+  #edit_btns{
+    position: relative;
+    top: 20%;
+    left: 33%;
+  }
+  .edit_buttons{
+    background-color:#A6A2A2;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    border-radius:6px;
+    border:2px hidden ;
+    display:inline-block;
+    cursor:pointer;
+    color:#FBFBF2;
+    font-size:15px;
+    width:20%;
+    padding:10px 24px;
   }
 
   #import_export_text{
     width: 90%;
-    height: 80%;
+    height: 70%;
     margin-top: 5%;
     margin-bottom: 10%;
     margin-left: 5%;
     margin-right: 5%;
   }
 
-  #import_export_buttons{
-      position:absolute;
-      bottom:2%;
-      right:5%;
+  .import_export_buttons{
+    background-color:#A6A2A2;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    border-radius:6px;
+    border:2px hidden ;
+    display:inline-block;
+    cursor:pointer;
+    color:#FBFBF2;
+    font-size:15px;
+    width:20%;
+    padding:10px 24px;
+  }
+
+  #import_export_btns{
+    position: absolute;
+    bottom: 4%;
+    right: -21%;
+    height: auto;
+    width: 106%;
   }
   button:last-child{
       left:100px;
@@ -161,6 +216,8 @@ a:visited{
   .opts_mon_title{
     text-align: center;
     font-size:24;
+    font-family: 'Lato';
+
   }
 
   #monitored_pages{
@@ -173,22 +230,21 @@ a:visited{
 
   .opts_edit_button {
 
-  background-color:#A6A2A2;
+  background-color:#A2AAB0; /* background-color:#A6A2A2; Original */
   -moz-border-radius:2px;
   -webkit-border-radius:2px;
   border-radius:6px;
   border:2px hidden ;
   display:inline-block;
   cursor:pointer;
-  color:#FBFBF2;
+  color:#EBECED; /* color:#FBFBF2 Original */
   font-size:15px;
   padding:7px 24px;
   text-decoration:none;
-  text-shadow:0px 1px 0px #fcfcfc;
   }
 
   .opts_edit_button:hover {
-  	  background-color:#847577;
+  	  background-color:#4C586F;
   }
 
   .opts_edit_button:active {
@@ -221,27 +277,44 @@ tr:hover{background-color: #dcdcdc}
   .amzid_col{
     display:inline;
   }
+
 button {
-  background-color:#A6A2A2;
+  background-color:#A2AAB0; /*  background-color:#A6A2A2; Original */
   -moz-border-radius:2px;
   -webkit-border-radius:2px;
   border-radius:6px;
   border:2px hidden ;
   display:inline-block;
   cursor:pointer;
-  color:#FBFBF2;
+  color:#EBECED; /*  color:#FBFBF2; Original */
   font-size:15px;
-  padding:7px 24px;
-  text-decoration:none;
-  text-shadow:0px 1px 0px #fcfcfc;
+  width:12%;
+  padding:10px 24px;
 }
 button:hover {
-  background-color:#847577;
+  background-color:#4C586F; /*  background-color:#847577; Original */
 }
 button:active {
   top:1px;
 }
+/* SVG OPTIONS */
+.logo{
+  height:100;
+  width:auto;
+  fill:#3E3E3B;
+}
+.st2, .st5{
+text-transform: uppercase;
+font-family:'Lato';
+}
 
+.st2{
+  font-weight:500;
+}
+
+.st5{
+  font-weight: 900;
+}
  /* button {
   	-moz-box-shadow:inset 0px 1px 0px 0px #fff6af;
   	-webkit-box-shadow:inset 0px 1px 0px 0px #fff6af;

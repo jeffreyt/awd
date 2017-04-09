@@ -5,7 +5,10 @@ function getOptsTitle(num,count){
   if(!num){
     returnStr = '<h2 class="opts_mon_title">No Monitored Pages</h2>';
   }
-  else {
+  else if(count == 1){
+    returnStr = '<h2 class="opts_mon_title">'+count+' Monitored Page</h2>';
+  }
+  else{
     returnStr = '<h2 class="opts_mon_title">'+count+' Monitored Pages</h2>';
   }
   return returnStr;

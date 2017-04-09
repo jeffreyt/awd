@@ -7,16 +7,36 @@
     <script type="text/javascript" src="scripts/textFunctions.js"></script>
     <script type="text/javascript" src="scripts/base.js"></script>
     <script type="text/javascript" src="scripts/options.js"></script>
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Cinzel:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:100,300,400' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:100,200,300,400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="styles/options.css">
   </head>
-  <body style="background-color: #FBFBF2">
-    <p>
-      <br>
-    </p>
+  <body style="background-color: #CBC5C1; color:#3E3E3B;"> <!--#FBFBF2 original color-->
+    <div style="text-align: center;">
+  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+   viewBox="0 0 700.3 200" style="enable-background:new 0 0 700.3 200;" xml:space="preserve" class="logo">
+<style type="text/css">
+  .st0{fill:none;}
+  .st1{font-family:'Lato';}
+  .st2{font-size:100px;}
+  .st3{fill:none;stroke:#3E3E3B;stroke-width:27;stroke-miterlimit:10;}
+  .st4{fill:none;stroke:#3E3E3B;stroke-width:28;stroke-miterlimit:10;}
+  .st5{font-family:'Lato';}
+</style>
+<rect x="206.7" y="26.1" class="st0" width="385.2" height="75"/>
+<text transform="matrix(0.7 0 0 0.7 206.6668 99.7928)" class="st1 st2">tiny</text>
+<path class="st3" d="M181.5,151.1h-163c-2.7,0-5-2.3-5-5v-115c0-2.8,2.3-5,5-5h163c2.8,0,5,2.3,5,5v115
+  C186.5,148.9,184.3,151.1,181.5,151.1z"/>
+<line class="st4" x1="43.4" y1="183.2" x2="156.7" y2="183.2"/>
+<rect x="210.4" y="104.5" class="st0" width="509.3" height="80.3"/>
+<text transform="matrix(1 0 0 1 210.3927 179.3886)" class="st5 st2">MONITOR</text>
+</svg>
+
+  <!--object type="image/svg+xml" data="imgs/Artboard 1.svg">
+</object-->
+</div>
     <div id = "main_options">
-      <h1 id="test" style="text-align: center">TinyMonitor Options</h1>
       <h3 id="version_num"></h3>
       <br>
       <div class="opts_first_line">
@@ -44,14 +64,10 @@
 
       <div id="import_export_popup">
         <textarea rows="30" cols="100" id="import_export_text"></textarea>
-        <div id="import_export_buttons">
-          <button id="import_perform">
-            <span class title>Import</span>
-          </button>
-          <button id="export_perform">
-            <span class title>Export</span>
-          </button>
-          <button id="import_export_close">Close</button>
+        <div id="import_export_btns">
+          <button class="import_export_buttons" id="import_perform">Import</button>
+          <button class="import_export_buttons" id="export_perform">Export</button>
+          <button class="import_export_buttons" id="import_export_close">Close</button>
         </div>
       </div>
 
@@ -81,10 +97,10 @@
         }
         </style>
       </div>
-        <div id = "edit_buttons">
-          <button id="edit_save">Save</button>
-          <button id="edit_remove">Remove</button>
-          <button id="edit_cancel">Cancel</button>
+        <div id="edit_btns">
+          <button class='edit_buttons' id="edit_save">Save</button>
+          <button class='edit_buttons' id="edit_remove">Remove</button>
+          <button class='edit_buttons' id="edit_cancel">Cancel</button>
         </div>
       </div>
       <br>
