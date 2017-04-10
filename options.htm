@@ -12,7 +12,7 @@
     <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="styles/options.css">
   </head>
-  <body style="background-color: #CBC5C1; color:#3E3E3B;"> <!--#FBFBF2 original color-->
+  <body style="color:#3E3E3B; background: url(imgs/new-wp-blur.png), no-repeat center fixed; background-height:100% 100%;"> <!--#FBFBF2 original color-->
     <div style="text-align: center;">
   <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
    viewBox="0 0 700.3 200" style="enable-background:new 0 0 700.3 200;" xml:space="preserve" class="logo">
@@ -40,25 +40,24 @@
       <h3 id="version_num"></h3>
       <br>
       <div class="opts_first_line">
-        <span>Sound &nbsp;   </span>
+      <div style="font-family:'Lato'; font-size:2em; ">
+        <p>Sound &nbsp;
         <select id="alert_sound">
           <option value=0>None</option>
           <option value=1>Cuckoo</option>
           <option value=2>Bell</option>
         </select>
-        <br>
+      <br>
         <input id="check_time">&nbsp;   minute(s) <br>
         <input id = "check_time_slider" type="range" min="0.02" max="60" value="0" step="1" />
-        <br><br>
+        <br></div>
         <button id="save_options">Set Timer</button>
         <!--<button id="test_email">Test Email</button>-->
-      </div>
-      <br>
-      <br>
+      </p></div>
       <div class="opts_second_line">
         <button id ="refresh_button">Refresh</button>
-        <button id ="import_export_button">Import/Export</button>
-        <button id="reset_old_prices" title="This will reset all your old prices.  Next time, any price below your maximum value will be shown.">Reset Old Prices</button>
+        <button id ="import_export_button">Import & Export</button>
+        <button id="reset_old_prices" title="This will reset all your old prices.  Next time, any price below your maximum value will be shown.">Reset Prices</button>
       </div>
       <div id="screen_disable"></div>
 
@@ -87,16 +86,7 @@
             <td class="edit_col_2"><input type="text" class="edit_textbox" id="edit_price"></input></td>
           </tr>
         </table>
-        <div class="code">
-        <style style="display: none;">
-        hr.style-one {
-          border: 0;
-          height: 1px;
-          background: #333;
-          background-image: linear-gradient(to right, #ccc, #333, #ccc);
-        }
-        </style>
-      </div>
+
         <div id="edit_btns">
           <button class='edit_buttons' id="edit_save">Save</button>
           <button class='edit_buttons' id="edit_remove">Remove</button>
@@ -105,7 +95,7 @@
       </div>
       <br>
       <br>
-      <hr>
+      <hr class="style1">
       <div id="monitored_pages_title"></div>
       <h3 id="monitored_pages_last"></h3>
       <!--<h3 id="monitored_pages_next"></h3>-->

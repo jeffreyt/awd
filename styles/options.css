@@ -1,8 +1,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
   html, body{font-family: 'Roboto Condensed', sans-serif;
+  float:center;
     font-weight:200;}
   div {}
-
+/*body texts*/
   h1 {
       font-family: 'Open Sans', sans-serif;
       text-transform: uppercase;;
@@ -12,9 +13,10 @@
   }
 
   h2 {
-    font-family: 'Roboto Condensed';
-    font-weight:400;
+    font-family: 'Lato';
+    font-weight:900;
     color:#3E3E3B;
+    text-transform: uppercase;
     text-align: center;
   }
 
@@ -35,7 +37,7 @@ a:link{
 }
 
 a:visited{
-  color:#A6A2A2; /*  color:#A6A2A2 original color */
+  color:#4C586F; /*  color:#A6A2A2 original color */
 }
   input {
     font-family: 'Lato';
@@ -86,8 +88,6 @@ a:visited{
 
   .opts_first_line{
     vertical-align: middle;
-    font-family:'Lato';
-    font-size:24px;
     width:100%;
     text-align: center;
   }
@@ -115,14 +115,13 @@ a:visited{
 
     position: fixed;
     left:25%;
-    top: 20%;
-    height: 60%;
+    top: 10%;
+    height: 80%;
     width: 50%;
     background-color:#C1CAD6; /*background-color:#C1CAD6 Original */
     margin-left: -0px;
     margin-top: -0px;
     padding:5px;
-    border-radius:10px;
     display:none;
     z-index: 10;
     color:white;
@@ -135,14 +134,13 @@ a:visited{
     background-color:#C1CAD6; /*background-color:#C1CAD6 Original */
     left:25%;
     top: 35%;
-    height: 220px;
+    height: 300px;
     width: 50%;
     margin-left: -0px;
     margin-top: -0px;
     color:white;
     opacity: 50%;
     padding:5px;
-    border-radius:10px;
     display:none;
     z-index: 8;
   }
@@ -162,52 +160,59 @@ a:visited{
   }
   #edit_btns{
     position: relative;
-    top: 20%;
-    left: 33%;
+    right: 0%;
+    height: auto;
+    width: 100%;
+    bottom:-13%;
+    text-align: center;
   }
   .edit_buttons{
     background-color:#A6A2A2;
-    -moz-border-radius:2px;
-    -webkit-border-radius:2px;
-    border-radius:6px;
     border:2px hidden ;
     display:inline-block;
     cursor:pointer;
     color:#FBFBF2;
-    font-size:15px;
-    width:20%;
-    padding:10px 24px;
+    padding:1rem;
+    font-size:1.5rem;
+    width:27%;
+    min-width: auto;
+    margin: auto .5rem;
   }
 
   #import_export_text{
+    position:relative;
     width: 90%;
     height: 70%;
-    margin-top: 5%;
-    margin-bottom: 10%;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin:5%;
+
   }
 
   .import_export_buttons{
     background-color:#A6A2A2;
-    -moz-border-radius:2px;
-    -webkit-border-radius:2px;
-    border-radius:6px;
     border:2px hidden ;
     display:inline-block;
     cursor:pointer;
     color:#FBFBF2;
     font-size:15px;
-    width:20%;
-    padding:10px 24px;
+    min-width:27%;
+    padding:.625em 1.5em;
+    margin:auto .5rem;
+  }
+
+ hr.style1{
+    border: 0; 
+    height: 1px; 
+    background-image: -webkit-linear-gradient(left, rgba(62, 62, 59, 0), #3e3e3b, rgba(240, 240, 240, 0));
+    background-image: -moz-linear-gradient(left, rgba(62, 62, 59, 0), #3e3e3b, rgba(240, 240, 240, 0));
+    background-image: -ms-linear-gradient(left, rgba(62, 62, 59, 0), #3e3e3b, rgba(240, 240, 240, 0));
+    background-image: -o-linear-gradient(left, rgba(62, 62, 59, 0), #3e3e3b, rgba(240, 240, 240, 0));
   }
 
   #import_export_btns{
-    position: absolute;
-    bottom: 4%;
-    right: -21%;
+    position: relative;
     height: auto;
-    width: 106%;
+    width: 100%;
+    text-align: center;
   }
   button:last-child{
       left:100px;
@@ -230,10 +235,7 @@ a:visited{
 
   .opts_edit_button {
 
-  background-color:#A2AAB0; /* background-color:#A6A2A2; Original */
-  -moz-border-radius:2px;
-  -webkit-border-radius:2px;
-  border-radius:6px;
+  background-color:#A2AAB0; /* background-color:#A6A2A2; Original */    
   border:2px hidden ;
   display:inline-block;
   cursor:pointer;
@@ -253,16 +255,17 @@ a:visited{
   }
 
   table{
-    font-family:'Roboto Condensed';
-    margin-left:auto; margin-right:auto;
+    margin-left:auto; 
+    margin-right:auto;
     width:90%;
     border-collapse:collapse;
     text-align: center;
     /*padding: 10px;*/
     border:0px solid black;
   }
-tr:hover{background-color: #dcdcdc}
-  th, td{
+  tr:hover{background-color: #dcdcdc;}
+  
+  th, td {
     border-bottom:1px solid #ddd;
     height:auto;
     width:auto;
@@ -280,16 +283,19 @@ tr:hover{background-color: #dcdcdc}
 
 button {
   background-color:#A2AAB0; /*  background-color:#A6A2A2; Original */
-  -moz-border-radius:2px;
-  -webkit-border-radius:2px;
-  border-radius:6px;
   border:2px hidden ;
-  display:inline-block;
+  margin:.75rem;
+  min-width: 10rem;
+  min-height:5.5rem;
+  text-transform: uppercase;
+  font-family: 'Open Sans';
+  font-weight: 700;
+  display:inline-table;
   cursor:pointer;
   color:#EBECED; /*  color:#FBFBF2; Original */
-  font-size:15px;
+  font-size:1.1em;
   width:12%;
-  padding:10px 24px;
+  padding:.625em 1.5em;
 }
 button:hover {
   background-color:#4C586F; /*  background-color:#847577; Original */
@@ -314,6 +320,113 @@ font-family:'Lato';
 
 .st5{
   font-weight: 900;
+}
+
+@media only screen and (max-width: 600px){
+    #import_export_popup{
+      width:100%;
+      height:100%;
+      left:0%;
+      top:0%;
+      }
+    #import_export_text{
+      height:40%;
+    }
+    .import_export_buttons{
+      margin:2%;
+    }
+    button{
+      font-size:2rem;
+      padding:1rem;
+      width:60%;
+      height:auto;
+    }
+    #edit_popup{
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+    }
+    table{
+      font-size:1.25rem;
+    }
+    .edit_table{
+      height:25%;
+      width:80%;
+      vertical-align: center;
+    }
+    .edit_textbox{
+      font-size:1.5rem;
+      width:90%;
+      height:auto;
+    }
+
+    .edit_buttons{
+      padding:1rem;
+      font-size:2rem;
+      width:60%;
+      margin:.625rem;
+    }
+    h2{
+      font-size: 2rem;
+    }
+
+    #check_time{
+      width:20%;
+    }
+    #check_time_slider{
+      width:60%;
+    }
+    
+}  
+
+@media only screen and (min-width: 601px) and (max-width: 1024px){
+  #import_export_popup{
+    width:80%;
+    height:100%;
+    left:10%;
+    top:5%;
+    }
+  #edit_popup{
+      top:5%;
+      left:10%;
+      width:80%;
+      height:60%;
+    }
+  table{
+    font-size:1.25rem;
+    }
+  .edit_table{
+    height:25%;
+    width:80%;
+    vertical-align: center;
+  }
+  .edit_textbox{
+    font-size:1.5rem;
+    width:90%;
+    height:auto;
+  }
+
+  .edit_buttons{
+    padding:1rem;
+    font-size:1rem;
+    width:27%;
+    min-width: auto;
+    margin: auto .5rem;
+    }
+  #edit_btns{
+    position: relative;
+    right:0%;
+    width:100%;
+    height:auto;
+    bottom: -13%;
+    text-align:center;
+    
+    }
+  
+  h2{
+    font-size: 2rem;
+    }
 }
  /* button {
   	-moz-box-shadow:inset 0px 1px 0px 0px #fff6af;

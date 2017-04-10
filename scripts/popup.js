@@ -98,13 +98,13 @@ function loadListings(willNotify){
   if(willNotify.length<1){
     //main.append('<div> No Changes </div>');
     main.append('<p align="center">No Changes</p>')
-    main.append('<hr>');
+    main.append('<hr class="style1">');
   }
   for(i=0;i<willNotify.length;i++){
     //console.log(willNotify[i]);
     main.append('<div><a href="' +willNotify[i][1]+ '" target="_blank" class = "popup_link" id="ln'+i+'">' +willNotify[i][0]+ '</a> - '+willNotify[i][2][0][0]+' '+willNotify[i][2][0][1]+'</div>');
     //main.append('<div><a href="' +willNotify[i][1]+ '" class = "popup_link" id="ln'+i+'">' +willNotify[i][0]+ '</a> - '+willNotify[i][2][0][0]+' '+willNotify[i][2][0][1]+'</div>');
-    main.append('<hr>');
+    main.append('<hr class="style1">');
   }
   var elements = document.getElementsByClassName('popup_link');
   //console.log(elements.length);
